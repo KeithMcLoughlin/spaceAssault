@@ -4,7 +4,11 @@ class Player extends GameObject
   float initialX, initialY;
   PVector initial;
   float windowX, windowY;
-  float gunAngle;
+  PVector topPos;
+  PVector bottomPos;
+  PVector midPos;
+  color bulletColor;
+  int timeElapsed = 14;
   
   //constructors
   Player()
@@ -16,13 +20,18 @@ class Player extends GameObject
   {
     super(startX, startY, w, h);
     initial = new PVector(0, 0);
+    topPos = new PVector(0, 0);
+    bottomPos = new PVector(0, 0);
+    midPos = new PVector(0, 0);
     gunAngle = 0.2f;
     speed = 5.0f;
+    bulletColor = color(0, 255, 0);
   }
   
   //functions
   void render()
   {
+    stroke(0);
     initial.x = pos.x - (w * 0.5f);
     initial.y = pos.y - (h * 0.5f);
     windowX = initial.x + (w * 0.4f);
@@ -32,8 +41,10 @@ class Player extends GameObject
     fill(127);
     rect(initial.x, initial.y + (h * 0.2f), -(w * 0.1f), h * 0.6f);
     
-    //front gun
+    //middle gun
     rect(initial.x + (w * 0.7f), initial.y + (h * 0.6f), w * 0.25f, h * 0.3f);
+    midPos.x = initial.x + (w * 0.9f);
+    midPos.y = initial.y + (h * 0.75f);
     
     //top gun
     rect(initial.x + (w * 0.25f), initial.y, w * 0.05f, -(h * 0.2f));
@@ -42,6 +53,8 @@ class Player extends GameObject
     rotate(-gunAngle);
     rect(0, 0, w * 0.15f, -(h * 0.15f));
     popMatrix();
+    topPos.x = initial.x + (w * 0.3f);
+    topPos.y = initial.y - (h * 0.2f);
     
     //bottom gun
     rect(initial.x + (w * 0.25f), initial.y + h, w * 0.05f, h * 0.2f);
@@ -50,6 +63,8 @@ class Player extends GameObject
     rotate(gunAngle);
     rect(0, 0, w * 0.15f, h * 0.15f);
     popMatrix();
+    bottomPos.x = initial.x + (w * 0.3f);
+    bottomPos.y = initial.y + h + (h * 0.2f);
     
     //draw ship body
     fill(255, 0, 0);
@@ -102,5 +117,33 @@ class Player extends GameObject
         pos.x = pos.x + speed;
       }
     }
+    if (keys['I'] && timeElapsed > 14)
+    {
+      Bullet bullet = new Bullet(0.0f);
+      bullet.pos.x = midPos.x;
+      bullet.pos.y = midPos.y;
+      bullet.c = bulletColor;
+      gameObjects.add(bullet);
+      timeElapsed = 0;
+    }
+    if (keys['O'] && timeElapsed > 14)
+    {
+      Bullet bullet = new Bullet(-gunAngle);
+      bullet.pos.x = topPos.x;
+      bullet.pos.y = topPos.y;
+      bullet.c = bulletColor;
+      gameObjects.add(bullet);
+      timeElapsed = 0;
+    }
+    if (keys['P'] && timeElapsed > 14)
+    {
+      Bullet bullet = new Bullet(gunAngle);
+      bullet.pos.x = bottomPos.x;
+      bullet.pos.y = bottomPos.y;
+      bullet.c = bulletColor;
+      gameObjects.add(bullet);
+      timeElapsed = 0;
+    }
+    timeElapsed++;
   }
 }
