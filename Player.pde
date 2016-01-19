@@ -10,6 +10,7 @@ class Player extends GameObject
   color bulletColor;
   int timeElapsed = 14;
   int ammo;
+  int counter = 0;
   
   //constructors
   Player()
@@ -42,13 +43,44 @@ class Player extends GameObject
     //draw thruster
     fill(127);
     rect(initial.x, initial.y + (h * 0.2f), -(w * 0.1f), h * 0.6f);
+    fill(#FFB41C);
+    stroke(#FFB41C);
+    rect(initial.x - (w * 0.1f), initial.y + (h * 0.2f), -(w * 0.05f), h * 0.6f);
+    float flameBase = initial.x - (w * 0.15f);
+    float flameTip;
+    if(counter % 2 == 0)
+    {
+      flameTip = flameBase - (w * 0.15f);
+    }
+    else
+    {
+      flameTip = flameBase - (w * 0.05f);
+    }
+    counter++;
+    beginShape(TRIANGLES);
+    vertex(flameBase, initial.y + (h * 0.8f));
+    vertex(flameTip, initial.y + (h * 0.75f));
+    vertex(flameBase, initial.y + (h * 0.7f));
+    vertex(flameBase, initial.y + (h * 0.65f));
+    vertex(flameTip, initial.y + (h * 0.6f));
+    vertex(flameBase, initial.y + (h * 0.55f));
+    vertex(flameBase, initial.y + (h * 0.5f));
+    vertex(flameTip, initial.y + (h * 0.45f));
+    vertex(flameBase, initial.y + (h * 0.4f));
+    vertex(flameBase, initial.y + (h * 0.35f));
+    vertex(flameTip, initial.y + (h * 0.3f));
+    vertex(flameBase, initial.y + (h * 0.2f));
+    endShape();
+    stroke(0);
     
     //middle gun
+    fill(127);
     rect(initial.x + (w * 0.7f), initial.y + (h * 0.6f), w * 0.25f, h * 0.3f);
     midPos.x = initial.x + (w * 0.9f);
     midPos.y = initial.y + (h * 0.75f);
     
     //top gun
+    fill(127);
     rect(initial.x + (w * 0.25f), initial.y, w * 0.05f, -(h * 0.2f));
     pushMatrix();
     translate(initial.x + (w * 0.2f), initial.y - (h * 0.1f));
@@ -59,6 +91,7 @@ class Player extends GameObject
     topPos.y = initial.y - (h * 0.2f);
     
     //bottom gun
+    fill(127);
     rect(initial.x + (w * 0.25f), initial.y + h, w * 0.05f, h * 0.2f);
     pushMatrix();
     translate(initial.x + (w * 0.2f), initial.y + h + h * 0.1f);
