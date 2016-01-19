@@ -2,6 +2,7 @@ abstract class GameObject
 {
   PVector pos;
   PVector forward;
+  PVector initial;
   float w;
   float h;
   float speed;

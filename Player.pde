@@ -1,8 +1,6 @@
 class Player extends GameObject
 {
   //fields
-  float initialX, initialY;
-  PVector initial;
   float windowX, windowY;
   PVector topPos;
   PVector bottomPos;

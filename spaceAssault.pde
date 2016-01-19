@@ -5,9 +5,6 @@ void setup()
   
   Player player = new Player();
   gameObjects.add(player);
-  
-  Bomb bomb = new Bomb();
-  gameObjects.add(bomb);
 }
 
 ArrayList<GameObject> gameObjects = new ArrayList<GameObject>();
@@ -23,10 +20,19 @@ void draw()
     go.render();
   }
   
-  if(frameCount % 300 == 0)
+  if(frameCount % 30 == 0)
   {
-     Bomb bomb = new Bomb();
-     gameObjects.add(bomb);
+    float num = random(0, 2);
+    if(num > 1)
+    {
+      Bomb bomb = new Bomb();
+      gameObjects.add(bomb);
+    }
+    else
+    {
+      Asteroid asteroid = new Asteroid();
+      gameObjects.add(asteroid);
+    }
   }
 }
 
