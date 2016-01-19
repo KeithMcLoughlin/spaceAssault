@@ -9,6 +9,7 @@ class Player extends GameObject
   PVector midPos;
   color bulletColor;
   int timeElapsed = 14;
+  int ammo;
   
   //constructors
   Player()
@@ -26,6 +27,7 @@ class Player extends GameObject
     gunAngle = 0.2f;
     speed = 5.0f;
     bulletColor = color(0, 255, 0);
+    ammo = 20;
   }
   
   //functions
@@ -117,7 +119,7 @@ class Player extends GameObject
         pos.x = pos.x + speed;
       }
     }
-    if (keys['I'] && timeElapsed > 14)
+    if (keys['I'] && timeElapsed > 14 && ammo > 0)
     {
       Bullet bullet = new Bullet(0.0f);
       bullet.pos.x = midPos.x;
@@ -125,8 +127,9 @@ class Player extends GameObject
       bullet.c = bulletColor;
       gameObjects.add(bullet);
       timeElapsed = 0;
+      ammo--;
     }
-    if (keys['O'] && timeElapsed > 14)
+    if (keys['O'] && timeElapsed > 14 && ammo > 0)
     {
       Bullet bullet = new Bullet(-gunAngle);
       bullet.pos.x = topPos.x;
@@ -134,8 +137,9 @@ class Player extends GameObject
       bullet.c = bulletColor;
       gameObjects.add(bullet);
       timeElapsed = 0;
+      ammo--;
     }
-    if (keys['P'] && timeElapsed > 14)
+    if (keys['P'] && timeElapsed > 14 && ammo > 0)
     {
       Bullet bullet = new Bullet(gunAngle);
       bullet.pos.x = bottomPos.x;
@@ -143,6 +147,7 @@ class Player extends GameObject
       bullet.c = bulletColor;
       gameObjects.add(bullet);
       timeElapsed = 0;
+      ammo--;
     }
     timeElapsed++;
   }

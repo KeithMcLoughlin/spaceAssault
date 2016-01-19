@@ -5,6 +5,9 @@ void setup()
   
   Player player = new Player();
   gameObjects.add(player);
+  
+  Bomb bomb = new Bomb();
+  gameObjects.add(bomb);
 }
 
 ArrayList<GameObject> gameObjects = new ArrayList<GameObject>();
@@ -18,6 +21,12 @@ void draw()
     GameObject go = gameObjects.get(i);
     go.update();
     go.render();
+  }
+  
+  if(frameCount % 300 == 0)
+  {
+     Bomb bomb = new Bomb();
+     gameObjects.add(bomb);
   }
 }
 
