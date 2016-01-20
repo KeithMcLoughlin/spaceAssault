@@ -5,6 +5,12 @@ void setup()
   
   Player player = new Player();
   gameObjects.add(player);
+  
+  for(int i = 0; i < 15; i++)
+  {
+    Star star = new Star(random(0, width), random(0, height));
+    gameObjects.add(star);
+  }
 }
 
 ArrayList<GameObject> gameObjects = new ArrayList<GameObject>();
@@ -18,6 +24,12 @@ void draw()
     GameObject go = gameObjects.get(i);
     go.update();
     go.render();
+  }
+  
+  if(frameCount % 10 == 0)
+  {
+    Star star = new Star();
+    gameObjects.add(star);
   }
   
   if(frameCount % 240 == 0)
