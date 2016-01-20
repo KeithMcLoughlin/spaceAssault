@@ -9,6 +9,7 @@ class Player extends GameObject
   float bulletSpeed;
   int timeElapsed = 14;
   int ammo;
+  int health;
   int counter = 0;
   
   //constructors
@@ -29,6 +30,7 @@ class Player extends GameObject
     bulletColor = color(0, 255, 0);
     bulletSpeed = 8.0f;
     ammo = 20;
+    health = 2;
   }
   
   //functions
@@ -120,6 +122,11 @@ class Player extends GameObject
     vertex(windowX + (w * 0.27f), windowY + (h * 0.35f));
     vertex(windowX, windowY + (h * 0.35f));
     endShape(CLOSE);
+    
+    //display health
+    fill(255, 0, 0);
+    text("Health: " + health, 10, 10);
+    text("Ammo: " + ammo, 100, 10);
   }
   
   void update()

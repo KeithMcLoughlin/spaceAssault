@@ -13,7 +13,7 @@ boolean[] keys = new boolean[512];
 void draw()
 {
   background(0);
-  for(int i = gameObjects.size() - 1 ; i >= 0   ;i --)
+  for(int i = gameObjects.size() - 1; i >= 0; i--)
   {
     GameObject go = gameObjects.get(i);
     go.update();
@@ -50,6 +50,20 @@ void draw()
       }
     }
   }
+  
+  if(frameCount % 600 == 0)
+  {
+    HealthPowerup health = new HealthPowerup();
+    gameObjects.add(health);
+  }
+  
+  if(frameCount % 240 == 0)
+  {
+    AmmoPowerup ammo = new AmmoPowerup();
+    gameObjects.add(ammo);
+  }
+  
+  checkCollisions();
 }
 
 void keyPressed()
@@ -60,4 +74,27 @@ void keyPressed()
 void keyReleased()
 {
   keys[keyCode] = false;
+}
+
+void checkCollisions()
+{
+  for(int i = gameObjects.size() - 1; i >= 0; i--)
+  {
+    GameObject go = gameObjects.get(i);
+    if(go instanceof Player)
+    {
+      for(int j = gameObjects.size() - 1; j >= 0; j--)
+      {
+        GameObject object = gameObjects.get(j);
+        if(object instanceof Powerup)
+        {
+          if(go.pos.dist(object.pos) < (go.w * 0.5f) + (object.w * 0.5f))
+          {
+            ((Powerup)object).applyTo((Player)go);
+            gameObjects.remove(object);
+          }
+        }
+      }
+    }
+  }
 }
