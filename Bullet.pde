@@ -4,10 +4,10 @@ class Bullet extends GameObject
   int bulletSize;
   float x, y;
   
-  Bullet(float angle)
+  Bullet(float angle, float speed)
   {
     gunAngle = angle;
-    speed = 8.0f;
+    this.speed = speed;
     bulletSize = 8;
   }
   

@@ -20,18 +20,28 @@ void draw()
     go.render();
   }
   
-  if(frameCount % 30 == 0)
+  if(frameCount % 240 == 0)
   {
-    float num = random(0, 2);
-    if(num > 1)
-    {
-      Bomb bomb = new Bomb();
-      gameObjects.add(bomb);
-    }
-    else
-    {
-      Asteroid asteroid = new Asteroid();
-      gameObjects.add(asteroid);
+    int num = (int)random(0, 3);
+    switch(num){
+      case 0:
+      {
+        Bomb bomb = new Bomb();
+        gameObjects.add(bomb);
+        break;
+      }
+      case 1:
+      {
+        Asteroid asteroid = new Asteroid();
+        gameObjects.add(asteroid);
+        break;
+      }
+      case 2:
+      {
+        EyeBot eyebot = new EyeBot();
+        gameObjects.add(eyebot);
+        break;
+      }
     }
   }
 }

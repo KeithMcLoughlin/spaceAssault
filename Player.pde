@@ -6,6 +6,7 @@ class Player extends GameObject
   PVector bottomPos;
   PVector midPos;
   color bulletColor;
+  float bulletSpeed;
   int timeElapsed = 14;
   int ammo;
   int counter = 0;
@@ -26,6 +27,7 @@ class Player extends GameObject
     gunAngle = 0.2f;
     speed = 5.0f;
     bulletColor = color(0, 255, 0);
+    bulletSpeed = 8.0f;
     ammo = 20;
   }
   
@@ -150,9 +152,10 @@ class Player extends GameObject
         pos.x = pos.x + speed;
       }
     }
+    //shoot middle gun
     if (keys['I'] && timeElapsed > 14 && ammo > 0)
     {
-      Bullet bullet = new Bullet(0.0f);
+      Bullet bullet = new Bullet(0.0f, bulletSpeed);
       bullet.pos.x = midPos.x;
       bullet.pos.y = midPos.y;
       bullet.c = bulletColor;
@@ -160,9 +163,10 @@ class Player extends GameObject
       timeElapsed = 0;
       ammo--;
     }
+    //shoot top gun
     if (keys['O'] && timeElapsed > 14 && ammo > 0)
     {
-      Bullet bullet = new Bullet(-gunAngle);
+      Bullet bullet = new Bullet(-gunAngle, bulletSpeed);
       bullet.pos.x = topPos.x;
       bullet.pos.y = topPos.y;
       bullet.c = bulletColor;
@@ -170,9 +174,10 @@ class Player extends GameObject
       timeElapsed = 0;
       ammo--;
     }
+    //shoot bottom gun
     if (keys['P'] && timeElapsed > 14 && ammo > 0)
     {
-      Bullet bullet = new Bullet(gunAngle);
+      Bullet bullet = new Bullet(gunAngle, bulletSpeed);
       bullet.pos.x = bottomPos.x;
       bullet.pos.y = bottomPos.y;
       bullet.c = bulletColor;

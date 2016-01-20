@@ -16,6 +16,7 @@ class Asteroid extends GameObject
   
   void render()
   {
+    stroke(0);
     initial.x = -(w * 0.5f);
     initial.y = -(h * 0.5f);
     pushMatrix();

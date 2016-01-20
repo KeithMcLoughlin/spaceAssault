@@ -11,6 +11,7 @@ class Bomb extends GameObject
   
   void render()
   {
+    stroke(0);
     fill(0, 255, 0);
     ellipse(pos.x, pos.y, w, h);
     fill(255, 0, 0);
