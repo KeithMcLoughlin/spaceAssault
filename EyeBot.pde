@@ -5,7 +5,7 @@ class EyeBot extends GameObject
   {
     w = 50;
     h = 50;
-    pos.x = width + 100;
+    pos.x = width + w;
     pos.y = random(h, height - h);
     speed = 1.0f;
     gunPos = new PVector(0, 0);

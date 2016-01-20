@@ -4,7 +4,7 @@ class Bomb extends GameObject
   {
     w = 30;
     h = 30;
-    pos.x = width + 100;
+    pos.x = width + w;
     pos.y = random(h, height - h);
     speed = 2.0f;
   }

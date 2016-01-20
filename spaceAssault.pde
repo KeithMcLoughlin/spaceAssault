@@ -22,7 +22,7 @@ void draw()
   
   if(frameCount % 240 == 0)
   {
-    int num = (int)random(0, 3);
+    int num = (int)random(0, 4);
     switch(num){
       case 0:
       {
@@ -40,6 +40,12 @@ void draw()
       {
         EyeBot eyebot = new EyeBot();
         gameObjects.add(eyebot);
+        break;
+      }
+      case 3:
+      {
+        Shooter shooter = new Shooter();
+        gameObjects.add(shooter);
         break;
       }
     }
