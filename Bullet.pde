@@ -8,7 +8,7 @@ class Bullet extends GameObject
     gunAngle = angle;
     this.speed = speed;
     h = 2;
-    w = 8;
+    w = 10;
     friendly = f;
   }
   

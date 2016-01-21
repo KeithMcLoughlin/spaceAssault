@@ -15,10 +15,41 @@ void setup()
 
 ArrayList<GameObject> gameObjects = new ArrayList<GameObject>();
 boolean[] keys = new boolean[512];
+int state = 0;
+boolean flashing = true;
 
 void draw()
 {
   background(0);
+  switch(state)
+  {
+    case 0: {mainMenu(); break;}
+    case 1: {mainGame(); break;}
+  }
+}
+
+void mainMenu()
+{
+  fill(255);
+  textSize(100);
+  text("Space Assault", width * 0.15, height * 0.2);
+  if(frameCount % 40 == 0)
+  {
+    flashing = !flashing;
+  }
+  if(flashing == true)
+  {
+    textSize(30);
+    text("Press Space to Start", width * 0.35, height * 0.5);
+  }
+  if(keys[' '])
+  {
+    state = 1;
+  }
+}
+
+void mainGame()
+{
   for(int i = gameObjects.size() - 1; i >= 0; i--)
   {
     GameObject go = gameObjects.get(i);
@@ -130,6 +161,6 @@ void checkCollisions()
           }
         }
       }
-    }
-  }
+    }//end enemy if
+  }//end for
 }

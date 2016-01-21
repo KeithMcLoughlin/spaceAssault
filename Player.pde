@@ -125,8 +125,9 @@ class Player extends GameObject
     
     //display health
     fill(255, 0, 0);
-    text("Health: " + health, 10, 10);
-    text("Ammo: " + ammo, 100, 10);
+    textSize(15);
+    text("Health: " + health, 10, 20);
+    text("Ammo: " + ammo, 100, 20);
   }
   
   void update()

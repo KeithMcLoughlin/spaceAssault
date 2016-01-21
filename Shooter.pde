@@ -43,6 +43,15 @@ class Shooter extends GameObject implements Enemy
     vertex(initial.x - w, initial.y + h);
     vertex(initial.x, initial.y + h);
     endShape(CLOSE);
+    
+    //window
+    fill(#A9C5FA);
+    beginShape();
+    vertex(initial.x - (w * 0.75f), initial.y);
+    vertex(initial.x - (w * 0.75f), initial.y + (h * 0.5f));
+    vertex(initial.x - w, initial.y + (h * 0.5f));
+    endShape(CLOSE);
+    
   }
   
   void update()
