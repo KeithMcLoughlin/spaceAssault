@@ -1,4 +1,4 @@
-class Shooter extends GameObject
+class Shooter extends GameObject implements Enemy
 {
   PVector topPos;
   PVector bottomPos;
@@ -55,7 +55,7 @@ class Shooter extends GameObject
     
     if(frameCount % 50 == 0)
     {
-      Bullet bullet = new Bullet(0.0f, -8.0f);
+      Bullet bullet = new Bullet(0.0f, -8.0f, false);
       bullet.pos.x = topPos.x;
       bullet.pos.y = topPos.y;
       bullet.c = color(255, 0, 0);
@@ -64,7 +64,7 @@ class Shooter extends GameObject
     
     if(frameCount % 70 == 0)
     {
-      Bullet bullet = new Bullet(0.0f, -8.0f);
+      Bullet bullet = new Bullet(0.0f, -8.0f, false);
       bullet.pos.x = bottomPos.x;
       bullet.pos.y = bottomPos.y;
       bullet.c = color(255, 0, 0);

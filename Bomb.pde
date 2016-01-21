@@ -1,4 +1,4 @@
-class Bomb extends GameObject
+class Bomb extends GameObject implements Enemy
 {
   Bomb()
   {

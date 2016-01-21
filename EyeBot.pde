@@ -1,4 +1,4 @@
-class EyeBot extends GameObject
+class EyeBot extends GameObject implements Enemy
 {
   PVector gunPos;
   EyeBot()
@@ -36,7 +36,7 @@ class EyeBot extends GameObject
     }
     if(frameCount % 180 == 0)
     {
-      Bullet bullet = new Bullet(0.0f, -8.0f);
+      Bullet bullet = new Bullet(0.0f, -8.0f, false);
       bullet.pos.x = gunPos.x;
       bullet.pos.y = gunPos.y;
       bullet.c = color(255, 0, 0);

@@ -1,4 +1,4 @@
-class Asteroid extends GameObject
+class Asteroid extends GameObject implements Enemy
 {
   float numX, numY;
   float theta;

@@ -160,9 +160,9 @@ class Player extends GameObject
       }
     }
     //shoot middle gun
-    if (keys['I'] && timeElapsed > 14 && ammo > 0)
+    if (keys[RIGHT] && timeElapsed > 14 && ammo > 0)
     {
-      Bullet bullet = new Bullet(0.0f, bulletSpeed);
+      Bullet bullet = new Bullet(0.0f, bulletSpeed, true);
       bullet.pos.x = midPos.x;
       bullet.pos.y = midPos.y;
       bullet.c = bulletColor;
@@ -171,9 +171,9 @@ class Player extends GameObject
       ammo--;
     }
     //shoot top gun
-    if (keys['O'] && timeElapsed > 14 && ammo > 0)
+    if (keys[UP] && timeElapsed > 14 && ammo > 0)
     {
-      Bullet bullet = new Bullet(-gunAngle, bulletSpeed);
+      Bullet bullet = new Bullet(-gunAngle, bulletSpeed, true);
       bullet.pos.x = topPos.x;
       bullet.pos.y = topPos.y;
       bullet.c = bulletColor;
@@ -182,9 +182,9 @@ class Player extends GameObject
       ammo--;
     }
     //shoot bottom gun
-    if (keys['P'] && timeElapsed > 14 && ammo > 0)
+    if (keys[DOWN] && timeElapsed > 14 && ammo > 0)
     {
-      Bullet bullet = new Bullet(gunAngle, bulletSpeed);
+      Bullet bullet = new Bullet(gunAngle, bulletSpeed, true);
       bullet.pos.x = bottomPos.x;
       bullet.pos.y = bottomPos.y;
       bullet.c = bulletColor;

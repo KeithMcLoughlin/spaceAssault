@@ -106,6 +106,29 @@ void checkCollisions()
             gameObjects.remove(object);
           }
         }
+        if(object instanceof Bullet)
+        {
+          if(object.friendly == false && go.pos.dist(object.pos) < (go.w * 0.5f) + (object.w * 0.5f))
+          {
+            gameObjects.remove(object);
+            ((Player)go).health--;
+          }
+        }
+      }
+    }
+    if(go instanceof Enemy)
+    {
+      for(int j = gameObjects.size() - 1; j >= 0; j--)
+      {
+        GameObject object = gameObjects.get(j);
+        if(object instanceof Bullet)
+        {
+          if(object.friendly == true && go.pos.dist(object.pos) < (go.w * 0.5f) + (object.w * 0.5f))
+          {
+            gameObjects.remove(object);
+            gameObjects.remove(go);
+          }
+        }
       }
     }
   }

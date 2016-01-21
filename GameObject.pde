@@ -7,6 +7,7 @@ abstract class GameObject
   float h;
   float speed;
   float gunAngle;
+  boolean friendly;
   
   GameObject()
   {

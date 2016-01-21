@@ -1,14 +1,15 @@
 class Bullet extends GameObject
 {
   color c;
-  int bulletSize;
   float x, y;
   
-  Bullet(float angle, float speed)
+  Bullet(float angle, float speed, boolean f)
   {
     gunAngle = angle;
     this.speed = speed;
-    bulletSize = 8;
+    h = 2;
+    w = 8;
+    friendly = f;
   }
   
   void render()
@@ -17,7 +18,7 @@ class Bullet extends GameObject
     pushMatrix();
     translate(pos.x, pos.y);
     rotate(gunAngle);
-    line(-bulletSize, 0, bulletSize, 0);
+    rect(0, 0, w, h);
     popMatrix();    
   }
   
