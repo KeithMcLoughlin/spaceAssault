@@ -25,6 +25,7 @@ void draw()
   {
     case 0: {mainMenu(); break;}
     case 1: {mainGame(); break;}
+    case 2: {gameOver(); break;}
   }
 }
 
@@ -109,6 +110,29 @@ void mainGame()
   checkCollisions();
 }
 
+void gameOver()
+{
+  fill(255, 0, 0);
+  textSize(100);
+  text("Game Over", width * 0.2, height * 0.4);
+  for(int i = gameObjects.size() - 1; i >= 0; i--)
+  {
+    gameObjects.remove(gameObjects.get(i));
+  }
+  if(keys[' '])
+  {
+    Player player = new Player();
+    gameObjects.add(player);
+    
+    for(int i = 0; i < 15; i++)
+    {
+      Star star = new Star(random(0, width), random(0, height));
+      gameObjects.add(star);
+    }
+    state = 1;
+  }
+}
+
 void keyPressed()
 {
   keys[keyCode] = true;
@@ -145,6 +169,18 @@ void checkCollisions()
             ((Player)go).health--;
           }
         }
+        if(object instanceof Enemy)
+        {
+          if(go.pos.dist(object.pos) < (go.w * 0.5f) + (object.w * 0.5f))
+          {
+            gameObjects.remove(object);
+            ((Player)go).health--;
+          }
+        }
+      }
+      if(((Player)go).health == 0)
+      {
+        state = 2;
       }
     }
     if(go instanceof Enemy)
