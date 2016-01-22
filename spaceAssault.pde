@@ -17,6 +17,8 @@ ArrayList<GameObject> gameObjects = new ArrayList<GameObject>();
 boolean[] keys = new boolean[512];
 int state = 0;
 boolean flashing = true;
+float firstStageTime = 240.0f;
+boolean motherShipTrigger = false;
 
 void draw()
 {
@@ -58,14 +60,21 @@ void mainGame()
     go.render();
   }
   
+  if(firstStageTime < 111.0f && motherShipTrigger == false)
+  {
+    MotherShip motherShip = new MotherShip();
+    gameObjects.add(motherShip);
+    motherShipTrigger = true;
+  }
+  
   if(frameCount % 10 == 0)
   {
     Star star = new Star();
     gameObjects.add(star);
   }
-  
-  if(frameCount % 240 == 0)
-  {
+    
+  if(frameCount % ((int)firstStageTime) == 0 && firstStageTime > 120)
+  { 
     int num = (int)random(0, 4);
     switch(num){
       case 0:
@@ -108,6 +117,7 @@ void mainGame()
   }
   
   checkCollisions();
+  firstStageTime -= 0.03f;
 }
 
 void gameOver()
@@ -115,6 +125,8 @@ void gameOver()
   fill(255, 0, 0);
   textSize(100);
   text("Game Over", width * 0.2, height * 0.4);
+  textSize(30);
+  text("Press Space to Restart", width * 0.35, height * 0.5);
   for(int i = gameObjects.size() - 1; i >= 0; i--)
   {
     gameObjects.remove(gameObjects.get(i));

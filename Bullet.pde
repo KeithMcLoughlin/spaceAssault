@@ -7,14 +7,15 @@ class Bullet extends GameObject
   {
     gunAngle = angle;
     this.speed = speed;
-    h = 2;
-    w = 10;
+    h = 3;
+    w = 20;
     friendly = f;
   }
   
   void render()
   {
     stroke(c);
+    fill(c);
     pushMatrix();
     translate(pos.x, pos.y);
     rotate(gunAngle);

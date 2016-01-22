@@ -8,7 +8,7 @@ class Shooter extends GameObject implements Enemy
     h = 40;
     pos.x = width + w;
     pos.y = random(h, height - h);
-    speed = 1.0f;
+    speed = 2.0f;
     initial = new PVector(0, 0);
     topPos = new PVector(0, 0);
     bottomPos = new PVector(0, 0);

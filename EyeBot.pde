@@ -7,7 +7,7 @@ class EyeBot extends GameObject implements Enemy
     h = 50;
     pos.x = width + w;
     pos.y = random(h, height - h);
-    speed = 1.0f;
+    speed = 2.0f;
     gunPos = new PVector(0, 0);
   }
   
