@@ -21,7 +21,7 @@ ArrayList<GameObject> gameObjects = new ArrayList<GameObject>();
 boolean[] keys = new boolean[512];
 int state = 0;
 boolean flashing = true;
-float time = 240.0f;  //original 240.0f
+float time = 120.0f;  //original 240.0f
 PVector topWall;
 PVector bottomWall;
 PVector midWall;
@@ -86,10 +86,16 @@ void mainGame()
       stage2 = false;
     }
     
-    if(frameCount % 240 == 0)
+    if(frameCount % 300 == 0)
     {
       Light light = new Light();
       gameObjects.add(light);
+    }
+    
+    if(frameCount % 240 == 0)
+    {
+      Turret turret = new Turret();
+      gameObjects.add(turret);
     }
   }
   
@@ -152,6 +158,10 @@ void mainGame()
         if(object instanceof EyeBot)
         {
           ((EyeBot)object).getPlayerPos(go.pos.y);
+        }
+        if(object instanceof Turret)
+        {
+          ((Turret)object).getPlayerPos(go.pos.x, go.pos.y);
         }
       }
     }
