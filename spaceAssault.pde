@@ -3,6 +3,10 @@ void setup()
   size(1000, 600);
   background(0);
   
+  topWall = new PVector(width, 0);
+  bottomWall = new PVector(width, height * 0.8f);
+  midWall = new PVector(width, height * 0.2f);
+  
   Player player = new Player();
   gameObjects.add(player);
   
@@ -17,8 +21,12 @@ ArrayList<GameObject> gameObjects = new ArrayList<GameObject>();
 boolean[] keys = new boolean[512];
 int state = 0;
 boolean flashing = true;
-float firstStageTime = 240.0f;
-boolean motherShipTrigger = false;
+float time = 120.0f;  //original 240.0f
+PVector topWall;
+PVector bottomWall;
+PVector midWall;
+boolean stage2 = true;
+float stage2speed = 2.0f;
 
 void draw()
 {
@@ -53,6 +61,38 @@ void mainMenu()
 
 void mainGame()
 {
+  if(time < 111.0f)
+  {
+    stroke(0);
+    fill(#6E737E);
+    rect(topWall.x, 0, width, height * 0.2f);
+    fill(#6E737E);
+    rect(bottomWall.x, height * 0.8f, width, height * 0.2f);
+    fill(#A1A6AF);
+    rect(midWall.x, height * 0.2f, width, height * 0.6f);
+    
+    if(stage2 == true)
+    {
+      topWall.x -= stage2speed;
+      bottomWall.x -= stage2speed;
+      midWall.x -= stage2speed;
+    }
+    
+    if(topWall.x < 0.0f)
+    {
+      topWall.x = 0;
+      bottomWall.x = 0;
+      midWall.x = 0;
+      stage2 = false;
+    }
+    
+    if(frameCount % 240 == 0)
+    {
+      Light light = new Light();
+      gameObjects.add(light);
+    }
+  }
+  
   for(int i = gameObjects.size() - 1; i >= 0; i--)
   {
     GameObject go = gameObjects.get(i);
@@ -60,20 +100,13 @@ void mainGame()
     go.render();
   }
   
-  if(firstStageTime < 111.0f && motherShipTrigger == false)
-  {
-    MotherShip motherShip = new MotherShip();
-    gameObjects.add(motherShip);
-    motherShipTrigger = true;
-  }
-  
-  if(frameCount % 10 == 0)
+  if(frameCount % 10 == 0 && time > 111.0f)
   {
     Star star = new Star();
     gameObjects.add(star);
   }
     
-  if(frameCount % ((int)firstStageTime) == 0 && firstStageTime > 120)
+  if(frameCount % ((int)time) == 0 && time > 120)
   { 
     int num = (int)random(0, 4);
     switch(num){
@@ -117,7 +150,7 @@ void mainGame()
   }
   
   checkCollisions();
-  firstStageTime -= 0.03f;
+  time -= 0.03f;
 }
 
 void gameOver()
@@ -135,6 +168,8 @@ void gameOver()
   {
     Player player = new Player();
     gameObjects.add(player);
+    
+    time = 240.0f;
     
     for(int i = 0; i < 15; i++)
     {
