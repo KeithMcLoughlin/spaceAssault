@@ -21,7 +21,7 @@ ArrayList<GameObject> gameObjects = new ArrayList<GameObject>();
 boolean[] keys = new boolean[512];
 int state = 0;
 boolean flashing = true;
-float time = 120.0f;  //original 240.0f
+float time = 240.0f;  //original 240.0f
 PVector topWall;
 PVector bottomWall;
 PVector midWall;
@@ -133,6 +133,26 @@ void mainGame()
         Shooter shooter = new Shooter();
         gameObjects.add(shooter);
         break;
+      }
+    }
+  }
+  
+  for(int i = gameObjects.size() - 1; i >= 0; i--)
+  {
+    GameObject go = gameObjects.get(i);
+    if(go instanceof Player)
+    {
+      for(int j = gameObjects.size() - 1; j >= 0; j--)
+      {
+        GameObject object = gameObjects.get(j);
+        if(object instanceof Bomb)
+        {
+          ((Bomb)object).getPlayerPos(go.pos.y);
+        }
+        if(object instanceof EyeBot)
+        {
+          ((EyeBot)object).getPlayerPos(go.pos.y);
+        }
       }
     }
   }

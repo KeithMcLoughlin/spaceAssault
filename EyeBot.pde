@@ -1,6 +1,9 @@
 class EyeBot extends GameObject implements Enemy
 {
   PVector gunPos;
+  float playerY;
+  float chaseSpeed;
+  
   EyeBot()
   {
     w = 50;
@@ -8,6 +11,7 @@ class EyeBot extends GameObject implements Enemy
     pos.x = width + w;
     pos.y = random(h, height - h);
     speed = 2.0f;
+    chaseSpeed = 1.0f;
     gunPos = new PVector(0, 0);
   }
   
@@ -34,7 +38,15 @@ class EyeBot extends GameObject implements Enemy
     {
       gameObjects.remove(this);
     }
-    if(frameCount % 180 == 0)
+    if(playerY > pos.y)
+    {
+      pos.y += chaseSpeed;
+    }
+    else if(playerY < pos.y)
+    {
+      pos.y -= chaseSpeed;
+    }
+    if(frameCount % 120 == 0)
     {
       Bullet bullet = new Bullet(0.0f, -8.0f, false);
       bullet.pos.x = gunPos.x;
@@ -42,5 +54,10 @@ class EyeBot extends GameObject implements Enemy
       bullet.c = color(255, 0, 0);
       gameObjects.add(bullet);
     }
+  }
+  
+  void getPlayerPos(float y)
+  {
+    playerY = y;
   }
 }
