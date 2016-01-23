@@ -16,14 +16,16 @@ class Light extends GameObject
   
   void render()
   {
-    stroke(c);
-    fill(c);
+    stroke(c, 126);
+    fill(c, 126);
     pushMatrix();
     translate(pos.x, pos.y);
     rotate(theta);
-    triangle(0, 0, -w, -h, w, -h);
+    triangle(0, 0, -w, -(h * 2.0f), w, -(h * 2.0f));
+    triangle(0, 0, -w, h * 2.0f, w, h * 2.0f);
     popMatrix();
     stroke(0);
+    fill(c);
     ellipse(pos.x, pos.y, w, h);
     
     theta += 0.1f;
