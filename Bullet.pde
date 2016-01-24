@@ -2,6 +2,8 @@ class Bullet extends GameObject
 {
   color c;
   float x, y;
+  boolean turret = false;
+  boolean turretTop = true;
   
   Bullet(float angle, float speed, boolean f)
   {
@@ -25,19 +27,35 @@ class Bullet extends GameObject
   
   void update()
   {
-    if(gunAngle < 0)
+    if(turret == false)
     {
-      y = -2.0f;
-    }
-    else if(gunAngle > 0)
-    {
-      y = 2.0f;
+      if(gunAngle < 0)
+      {
+        y = -2.0f;
+      }
+      else if(gunAngle > 0)
+      {
+        y = 2.0f;
+      }
+      else
+      {
+        y = 0.0f;
+      }
+      x = speed;
     }
     else
     {
-      y = 0.0f;
+      if(turretTop == true)
+      {
+        x = (map(-gunAngle, 0, PI, -speed, speed)) - 2.0f;
+        y = sin(-gunAngle) * speed;
+      }
+      else
+      {
+        x = (map(gunAngle, 0, PI, -speed, speed)) - 2.0f;
+        y = sin(gunAngle) * -speed;
+      }
     }
-    x = speed;
     forward = new PVector(x, y);
     pos.add(forward);
     

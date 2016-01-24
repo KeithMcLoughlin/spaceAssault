@@ -20,7 +20,7 @@ class Turret extends GameObject implements Enemy
     }
     speed = 2.0f;
     chaseSpeed = 1.0f;
-    gunPos = new PVector(0, 0);
+    gunPos = new PVector(pos.x, pos.y);
   }
   
   void render()
@@ -48,7 +48,7 @@ class Turret extends GameObject implements Enemy
       rect(-(w *0.625f), h * 0.2f, w, -(h * 0.4f));
       popMatrix();
     }
-    gunPos.x = pos.x + (w * 0.45f);
+    gunPos.x = pos.x;
     gunPos.y = pos.y;
   }
   
@@ -59,14 +59,19 @@ class Turret extends GameObject implements Enemy
     {
       gameObjects.remove(this);
     }
-    /*if(frameCount % 120 == 0)
+    if(frameCount % 120 == 0)
     {
-      Bullet bullet = new Bullet(0.0f, -8.0f, false);
+      Bullet bullet = new Bullet(gunAngle, 8.0f, false);
       bullet.pos.x = gunPos.x;
       bullet.pos.y = gunPos.y;
+      bullet.turret = true;
+      if(num > 0.5f)
+      {
+        bullet.turretTop = false;
+      }
       bullet.c = color(255, 0, 0);
       gameObjects.add(bullet);
-    }*/
+    }
   }
   
   void getPlayerPos(float x, float y)

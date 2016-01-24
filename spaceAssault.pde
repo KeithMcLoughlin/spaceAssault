@@ -180,7 +180,10 @@ void mainGame()
   }
   
   checkCollisions();
-  time -= 0.03f;
+  if(time > 10.0f)
+  {
+    time -= 0.03f;
+  }
 }
 
 void gameOver()
@@ -262,7 +265,7 @@ void checkCollisions()
     }
     if(go instanceof Enemy)
     {
-      for(int j = gameObjects.size() - 1; j >= 0; j--)
+      for(int j = 0; j <= gameObjects.size() - 1; j++)
       {
         GameObject object = gameObjects.get(j);
         if(object instanceof Bullet)
