@@ -21,7 +21,7 @@ ArrayList<GameObject> gameObjects = new ArrayList<GameObject>();
 boolean[] keys = new boolean[512];
 int state = 0;
 boolean flashing = true;
-float time = 120.0f;  //original 240.0f
+float time = 40.0f;  //original 240.0f
 PVector topWall;
 PVector bottomWall;
 PVector midWall;
@@ -89,15 +89,16 @@ void mainMenu()
 
 void mainGame()
 {
-  if(time < 111.0f)
+  //stage 2
+  if(time < 111.0f && time > 22.0f)
   {
     stroke(0);
     fill(#6E737E);
-    rect(topWall.x, 0, width, height * 0.2f);
+    rect(topWall.x, topWall.y, width, height * 0.2f);
     fill(#6E737E);
-    rect(bottomWall.x, height * 0.8f, width, height * 0.2f);
+    rect(bottomWall.x, bottomWall.y, width, height * 0.2f);
     fill(#A1A6AF);
-    rect(midWall.x, height * 0.2f, width, height * 0.6f);
+    rect(midWall.x, midWall.y, width, height * 0.6f);
     
     if(stage2 == true)
     {
@@ -124,6 +125,34 @@ void mainGame()
     {
       Turret turret = new Turret();
       gameObjects.add(turret);
+    }
+  }
+
+  if(time < 22.0f)
+  {
+    noStroke();
+    fill(#A1A6AF);
+    rect(midWall.x + width, height * 0.1f, width, height * 0.8f);
+    stroke(0);
+    fill(#6E737E);
+    rect(topWall.x + width, 0, width, height * 0.1f);
+    fill(#6E737E);
+    rect(bottomWall.x + width, height * 0.9f, width, height * 0.1f);
+    
+    noStroke();
+    fill(#A1A6AF);
+    rect(midWall.x, midWall.y, width, height * 0.6f);
+    stroke(0);
+    fill(#6E737E);
+    rect(topWall.x, topWall.y, width, height * 0.2f);
+    fill(#6E737E);
+    rect(bottomWall.x, bottomWall.y, width, height * 0.2f);
+    
+    if(topWall.x + width >= 0.0f)
+    {
+      topWall.x -= stage2speed;
+      bottomWall.x -= stage2speed;
+      midWall.x -= stage2speed;
     }
   }
   
