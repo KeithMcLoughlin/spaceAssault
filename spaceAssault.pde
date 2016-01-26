@@ -27,6 +27,7 @@ PVector bottomWall;
 PVector midWall;
 boolean stage2 = true;
 float stage2speed = 2.0f;
+boolean displayControls = false;
 
 void draw()
 {
@@ -41,22 +42,49 @@ void draw()
 
 void mainMenu()
 {
-  fill(255);
-  textSize(100);
-  text("Space Assault", width * 0.15, height * 0.2);
-  if(frameCount % 40 == 0)
+  if(displayControls == false)
   {
-    flashing = !flashing;
-  }
-  if(flashing == true)
-  {
+    fill(255);
+    textSize(100);
+    text("Space Assault", width * 0.15, height * 0.2);
+    if(frameCount % 40 == 0)
+    {
+      flashing = !flashing;
+    }
+    if(flashing == true)
+    {
+      textSize(30);
+      text("Press Space to Start", width * 0.35, height * 0.5);
+    }
     textSize(30);
-    text("Press Space to Start", width * 0.35, height * 0.5);
+    text("Controls - Press C", width * 0.35, height * 0.8);
+    if(keys['C'])
+    {
+      displayControls = true;
+    }
+    if(keys[' '])
+    {
+      state = 1;
+    }
   }
-  if(keys[' '])
+  else
   {
-    state = 1;
+    fill(255);
+    textSize(30);
+    text("W - Move Up", width * 0.15, height * 0.1);
+    text("S - Move Down", width * 0.15, height * 0.2);
+    text("A - Move Left", width * 0.15, height * 0.3);
+    text("D - Move Right", width * 0.15, height * 0.4);
+    text("Up Arrow - Fire Top Gun", width * 0.15, height * 0.5);
+    text("Down Arrow - Fire Bottom Gun", width * 0.15, height * 0.6);
+    text("Right Arrow - Fire Middle Gun", width * 0.15, height * 0.7);
+    text("Press B to Return to Menu", width * 0.15, height * 0.9);
+    if(keys['B'])
+    {
+      displayControls = false;
+    }
   }
+  
 }
 
 void mainGame()
@@ -195,7 +223,7 @@ void gameOver()
   text("Press Space to Restart", width * 0.35, height * 0.5);
   for(int i = gameObjects.size() - 1; i >= 0; i--)
   {
-    gameObjects.remove(gameObjects.get(i));
+    gameObjects.remove(gameObjects.get(i));      //gameObjects.clear
   }
   if(keys[' '])
   {
@@ -203,6 +231,9 @@ void gameOver()
     gameObjects.add(player);
     
     time = 240.0f;
+    topWall.x = width;
+    bottomWall.x = width;
+    midWall.x = width;
     
     for(int i = 0; i < 15; i++)
     {
