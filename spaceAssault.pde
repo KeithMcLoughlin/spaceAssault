@@ -28,6 +28,7 @@ PVector midWall;
 boolean stage2 = true;
 float stage2speed = 2.0f;
 boolean displayControls = false;
+boolean bossSpawned = false;
 
 void draw()
 {
@@ -153,6 +154,13 @@ void mainGame()
       topWall.x -= stage2speed;
       bottomWall.x -= stage2speed;
       midWall.x -= stage2speed;
+    }
+    
+    if(topWall.x + width < 0.0f && bossSpawned == false)
+    {
+      Boss boss = new Boss();
+      gameObjects.add(boss);
+      bossSpawned = true;
     }
   }
   
