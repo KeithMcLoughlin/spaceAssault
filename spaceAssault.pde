@@ -158,6 +158,10 @@ void mainGame()
     
     if(topWall.x + width < 0.0f && bossSpawned == false)
     {
+      BossGun bGun1 = new BossGun(height * 0.3f, true);
+      gameObjects.add(bGun1);
+      BossGun bGun2 = new BossGun(height * 0.7f, false);
+      gameObjects.add(bGun2);
       Boss boss = new Boss();
       gameObjects.add(boss);
       bossSpawned = true;
