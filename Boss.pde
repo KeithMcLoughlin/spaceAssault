@@ -7,6 +7,7 @@ class Boss extends GameObject implements Enemy
     h = 70;
     pos.x = width + w;
     pos.y = height * 0.5f;
+    health = 20;
   }
   
   void render()

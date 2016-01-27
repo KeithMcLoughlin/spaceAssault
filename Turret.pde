@@ -21,35 +21,53 @@ class Turret extends GameObject implements Enemy
     speed = 2.0f;
     chaseSpeed = 1.0f;
     gunPos = new PVector(pos.x, pos.y);
+    health = 4;
+    alive = true;
   }
   
   void render()
   {
-    gunAngle = atan2(pos.y - playerY, pos.x - playerX);
-    if(num > 0.5f)
+    if(alive)
     {
-      stroke(0);
-      fill(127);
-      rect(pos.x, pos.y, w * 0.25f, h * 0.6f);
-      pushMatrix();
-      translate(pos.x + (w * 0.125), pos.y);
-      rotate(gunAngle);
-      rect(-(w *0.625f), -(h * 0.2f), w, h * 0.4f);
-      popMatrix();
+      gunAngle = atan2(pos.y - playerY, pos.x - playerX);
+      if(num > 0.5f)
+      {
+        stroke(0);
+        fill(127);
+        rect(pos.x, pos.y, w * 0.25f, h * 0.6f);
+        pushMatrix();
+        translate(pos.x + (w * 0.125), pos.y);
+        rotate(gunAngle);
+        rect(-(w *0.625f), -(h * 0.2f), w, h * 0.4f);
+        popMatrix();
+      }
+      else
+      {
+        stroke(0);
+        fill(127);
+        rect(pos.x, pos.y, w * 0.25f, -(h * 0.6f));
+        pushMatrix();
+        translate(pos.x + (w * 0.125), pos.y);
+        rotate(gunAngle);
+        rect(-(w *0.625f), h * 0.2f, w, -(h * 0.4f));
+        popMatrix();
+      }
+      gunPos.x = pos.x;
+      gunPos.y = pos.y;
     }
     else
     {
-      stroke(0);
-      fill(127);
-      rect(pos.x, pos.y, w * 0.25f, -(h * 0.6f));
-      pushMatrix();
-      translate(pos.x + (w * 0.125), pos.y);
-      rotate(gunAngle);
-      rect(-(w *0.625f), h * 0.2f, w, -(h * 0.4f));
-      popMatrix();
+      strokeWeight(5);
+      noFill();
+      stroke(#FFCD15);
+      explosionRadius += 2.0f;
+      ellipse(pos.x, pos.y, explosionRadius, explosionRadius);
+      strokeWeight(1);
+      if(explosionRadius > (w * 2.0f))
+      {
+        gameObjects.remove(this);
+      }
     }
-    gunPos.x = pos.x;
-    gunPos.y = pos.y;
   }
   
   void update()
@@ -59,18 +77,21 @@ class Turret extends GameObject implements Enemy
     {
       gameObjects.remove(this);
     }
-    if(frameCount % 120 == 0)
+    if(alive)
     {
-      Bullet bullet = new Bullet(gunAngle, 8.0f, false);
-      bullet.pos.x = gunPos.x;
-      bullet.pos.y = gunPos.y;
-      bullet.turret = true;
-      if(num > 0.5f)
+      if(frameCount % 120 == 0)
       {
-        bullet.turretTop = false;
+        Bullet bullet = new Bullet(gunAngle, 8.0f, false);
+        bullet.pos.x = gunPos.x;
+        bullet.pos.y = gunPos.y;
+        bullet.turret = true;
+        if(num > 0.5f)
+        {
+          bullet.turretTop = false;
+        }
+        bullet.c = color(255, 0, 0);
+        gameObjects.add(bullet);
       }
-      bullet.c = color(255, 0, 0);
-      gameObjects.add(bullet);
     }
   }
   

@@ -9,7 +9,6 @@ class Player extends GameObject
   float bulletSpeed;
   int timeElapsed = 14;
   int ammo;
-  int health;
   int counter = 0;
   
   //constructors

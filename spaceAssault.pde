@@ -21,7 +21,7 @@ ArrayList<GameObject> gameObjects = new ArrayList<GameObject>();
 boolean[] keys = new boolean[512];
 int state = 0;
 boolean flashing = true;
-float time = 40.0f;  //original 240.0f
+float time = 240.0f;  //original 240.0f
 PVector topWall;
 PVector bottomWall;
 PVector midWall;
@@ -323,7 +323,7 @@ void checkCollisions()
         }
         if(object instanceof Enemy)
         {
-          if(go.pos.dist(object.pos) < (go.w * 0.5f) + (object.w * 0.5f))
+          if(go.pos.dist(object.pos) < (go.w * 0.5f) + (object.w * 0.5f) && object.alive == true)
           {
             gameObjects.remove(object);
             ((Player)go).health--;
@@ -342,10 +342,14 @@ void checkCollisions()
         GameObject object = gameObjects.get(j);
         if(object instanceof Bullet)
         {
-          if(object.friendly == true && go.pos.dist(object.pos) < (go.w * 0.5f) + (object.w * 0.5f))
+          if(object.friendly == true && go.pos.dist(object.pos) < (go.w * 0.5f) + (object.w * 0.5f) && go.alive)
           {
             gameObjects.remove(object);
-            gameObjects.remove(go);
+            go.health--;
+            if(go.health == 0)
+            {
+              go.alive = false;
+            }
           }
         }
       }

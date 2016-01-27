@@ -8,6 +8,9 @@ abstract class GameObject
   float speed;
   float gunAngle;
   boolean friendly;
+  int health;
+  boolean alive;
+  float explosionRadius;
   
   GameObject()
   {
