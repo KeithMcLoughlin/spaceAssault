@@ -21,7 +21,7 @@ ArrayList<GameObject> gameObjects = new ArrayList<GameObject>();
 boolean[] keys = new boolean[512];
 int state = 0;
 boolean flashing = true;
-float time = 240.0f;  //original 240.0f
+float time = 40.0f;  //original 240.0f
 PVector topWall;
 PVector bottomWall;
 PVector midWall;
@@ -330,7 +330,7 @@ void checkCollisions()
           }
         }
       }
-      if(((Player)go).health == 0)
+      if(((Player)go).health <= 0)
       {
         state = 2;
       }
@@ -346,9 +346,16 @@ void checkCollisions()
           {
             gameObjects.remove(object);
             go.health--;
-            if(go.health == 0)
+            if(go.health <= 0)
             {
               go.alive = false;
+            }
+          }
+          if(go instanceof BossGun)
+          {
+            if(object.friendly == true && go.pos.dist(object.pos) < (go.w * 0.5f) + (object.w * 0.5f))
+            {
+              gameObjects.remove(object);
             }
           }
         }
