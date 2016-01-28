@@ -10,6 +10,7 @@ class Player extends GameObject
   int timeElapsed = 14;
   int ammo;
   int counter = 0;
+  HealthBar playerHealthBar;
   
   //constructors
   Player()
@@ -29,7 +30,9 @@ class Player extends GameObject
     bulletColor = color(0, 255, 0);
     bulletSpeed = 8.0f;
     ammo = 20;
-    health = 2;
+    health = 3;
+    playerHealthBar = new HealthBar(20, 20, 200, 20, health);
+    gameObjects.add(playerHealthBar);
   }
   
   //functions
@@ -122,11 +125,10 @@ class Player extends GameObject
     vertex(windowX, windowY + (h * 0.35f));
     endShape(CLOSE);
     
-    //display health
+    //display ammo
     fill(255, 0, 0);
     textSize(15);
-    text("Health: " + health, 10, 20);
-    text("Ammo: " + ammo, 100, 20);
+    text("Ammo: " + ammo, 240, 30);
   }
   
   void update()
@@ -193,5 +195,7 @@ class Player extends GameObject
       ammo--;
     }
     timeElapsed++;
+    
+    playerHealthBar.health = health;
   }
 }

@@ -1,6 +1,8 @@
 class Boss extends GameObject implements Enemy
 {
   boolean direction = true;
+  HealthBar bossHealthBar;
+  
   Boss()
   {
     w = 60;
@@ -8,6 +10,9 @@ class Boss extends GameObject implements Enemy
     pos.x = width + w;
     pos.y = height * 0.5f;
     health = 20;
+    bossHealthBar = new HealthBar(20, height * 0.85f, width * 0.8f, height * 0.1f, health);
+    gameObjects.add(bossHealthBar);
+    alive = true;
   }
   
   void render()
@@ -42,5 +47,7 @@ class Boss extends GameObject implements Enemy
     {
       pos.x -= speed;
     }
+    
+    bossHealthBar.health = health;
   }
 }
