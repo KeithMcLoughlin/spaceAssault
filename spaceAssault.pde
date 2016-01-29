@@ -21,14 +21,15 @@ ArrayList<GameObject> gameObjects = new ArrayList<GameObject>();
 boolean[] keys = new boolean[512];
 int state = 0;
 boolean flashing = true;
-float time = 40.0f;  //original 240.0f
+float time = 240.0f;  //original 240.0f
 PVector topWall;
 PVector bottomWall;
 PVector midWall;
-boolean stage2 = true;
+boolean stage2 = false;
 float stage2speed = 2.0f;
 boolean displayControls = false;
 boolean bossSpawned = false;
+boolean disableControls = false;
 
 void draw()
 {
@@ -93,6 +94,11 @@ void mainGame()
   //stage 2
   if(time < 111.0f && time > 22.0f)
   {
+    if(stage2 == false)
+    {
+      disableControls = true;
+    }
+    stage2 = true;
     stroke(0);
     fill(#6E737E);
     rect(topWall.x, topWall.y, width, height * 0.2f);
@@ -101,19 +107,11 @@ void mainGame()
     fill(#A1A6AF);
     rect(midWall.x, midWall.y, width, height * 0.6f);
     
-    if(stage2 == true)
+    if(topWall.x > 0.0f)
     {
       topWall.x -= stage2speed;
       bottomWall.x -= stage2speed;
       midWall.x -= stage2speed;
-    }
-    
-    if(topWall.x < 0.0f)
-    {
-      topWall.x = 0;
-      bottomWall.x = 0;
-      midWall.x = 0;
-      stage2 = false;
     }
     
     if(frameCount % 300 == 0)

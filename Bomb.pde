@@ -67,7 +67,7 @@ class Bomb extends GameObject implements  Enemy
         pos.y -= chaseSpeed;
       }
       
-      lightRadius += 1.0f;
+      lightRadius += 2.0f;
       if(lightRadius > (w * 2.0f))
       {
         lightRadius = 0.0f;

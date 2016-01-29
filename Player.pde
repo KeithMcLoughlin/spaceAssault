@@ -11,6 +11,8 @@ class Player extends GameObject
   int ammo;
   int counter = 0;
   HealthBar playerHealthBar;
+  float maxHeight = 0;
+  float minHeight = height;
   
   //constructors
   Player()
@@ -133,69 +135,98 @@ class Player extends GameObject
   
   void update()
   {
-    if(keys['W'])
+    if(disableControls == false)
     {
-      if(initial.y > 0)
+      if(keys['W'])
       {
-        pos.y = pos.y - speed;
+        if(initial.y > maxHeight)
+        {
+          pos.y = pos.y - speed;
+        }
+      }
+      if(keys['S'])
+      {
+        if((initial.y + h) < minHeight)
+        {
+          pos.y = pos.y + speed;
+        }
+      }
+      if(keys['A'])
+      {
+        if(initial.x > 0)
+        {
+          pos.x = pos.x - speed;
+        }
+      }
+      if(keys['D'])
+      {
+        if((initial.x + w) < width)
+        {
+          pos.x = pos.x + speed;
+        }
+      }
+      //shoot middle gun
+      if (keys[RIGHT] && timeElapsed > 14 && ammo > 0)
+      {
+        Bullet bullet = new Bullet(0.0f, bulletSpeed, true);
+        bullet.pos.x = midPos.x;
+        bullet.pos.y = midPos.y;
+        bullet.c = bulletColor;
+        gameObjects.add(bullet);
+        timeElapsed = 0;
+        ammo--;
+      }
+      //shoot top gun
+      if (keys[UP] && timeElapsed > 14 && ammo > 0)
+      {
+        Bullet bullet = new Bullet(-gunAngle, bulletSpeed, true);
+        bullet.pos.x = topPos.x;
+        bullet.pos.y = topPos.y;
+        bullet.c = bulletColor;
+        gameObjects.add(bullet);
+        timeElapsed = 0;
+        ammo--;
+      }
+      //shoot bottom gun
+      if (keys[DOWN] && timeElapsed > 14 && ammo > 0)
+      {
+        Bullet bullet = new Bullet(gunAngle, bulletSpeed, true);
+        bullet.pos.x = bottomPos.x;
+        bullet.pos.y = bottomPos.y;
+        bullet.c = bulletColor;
+        gameObjects.add(bullet);
+        timeElapsed = 0;
+        ammo--;
+      }
+      timeElapsed++;
+    }
+    else
+    {
+      //center player for stage 2 entry
+      if(pos.y < height * 0.5f)
+      {
+        pos.y += (speed * 0.5f);
+        if(pos.y >= height * 0.5f)
+        {
+          disableControls = false;
+        }
+      }
+      else
+      {
+        pos.y -= (speed * 0.5f);
+        if(pos.y <= height * 0.5f)
+        {
+          disableControls = false;
+        }
       }
     }
-    if(keys['S'])
-    {
-      if((initial.y + h) < height)
-      {
-        pos.y = pos.y + speed;
-      }
-    }
-    if(keys['A'])
-    {
-      if(initial.x > 0)
-      {
-        pos.x = pos.x - speed;
-      }
-    }
-    if(keys['D'])
-    {
-      if((initial.x + w) < width)
-      {
-        pos.x = pos.x + speed;
-      }
-    }
-    //shoot middle gun
-    if (keys[RIGHT] && timeElapsed > 14 && ammo > 0)
-    {
-      Bullet bullet = new Bullet(0.0f, bulletSpeed, true);
-      bullet.pos.x = midPos.x;
-      bullet.pos.y = midPos.y;
-      bullet.c = bulletColor;
-      gameObjects.add(bullet);
-      timeElapsed = 0;
-      ammo--;
-    }
-    //shoot top gun
-    if (keys[UP] && timeElapsed > 14 && ammo > 0)
-    {
-      Bullet bullet = new Bullet(-gunAngle, bulletSpeed, true);
-      bullet.pos.x = topPos.x;
-      bullet.pos.y = topPos.y;
-      bullet.c = bulletColor;
-      gameObjects.add(bullet);
-      timeElapsed = 0;
-      ammo--;
-    }
-    //shoot bottom gun
-    if (keys[DOWN] && timeElapsed > 14 && ammo > 0)
-    {
-      Bullet bullet = new Bullet(gunAngle, bulletSpeed, true);
-      bullet.pos.x = bottomPos.x;
-      bullet.pos.y = bottomPos.y;
-      bullet.c = bulletColor;
-      gameObjects.add(bullet);
-      timeElapsed = 0;
-      ammo--;
-    }
-    timeElapsed++;
-    
+    //display players health bar
     playerHealthBar.health = health;
+    
+    if(stage2 == true)
+    {
+      maxHeight = height * 0.2f;
+      minHeight = height * 0.8f;
+    }
   }
 }
