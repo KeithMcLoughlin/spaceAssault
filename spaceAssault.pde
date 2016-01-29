@@ -3,6 +3,9 @@ void setup()
   size(1000, 600);
   background(0);
   
+  maxHeight = 0;
+  minHeight = height;
+  
   topWall = new PVector(width, 0);
   bottomWall = new PVector(width, height * 0.8f);
   midWall = new PVector(width, height * 0.2f);
@@ -21,7 +24,7 @@ ArrayList<GameObject> gameObjects = new ArrayList<GameObject>();
 boolean[] keys = new boolean[512];
 int state = 0;
 boolean flashing = true;
-float time = 240.0f;  //original 240.0f
+float time = 120.0f;  //original 240.0f
 PVector topWall;
 PVector bottomWall;
 PVector midWall;
@@ -30,6 +33,8 @@ float stage2speed = 2.0f;
 boolean displayControls = false;
 boolean bossSpawned = false;
 boolean disableControls = false;
+float maxHeight;
+float minHeight;
 
 void draw()
 {
@@ -86,7 +91,6 @@ void mainMenu()
       displayControls = false;
     }
   }
-  
 }
 
 void mainGame()
@@ -99,6 +103,9 @@ void mainGame()
       disableControls = true;
     }
     stage2 = true;
+    //set max & min heights for stage 2
+    maxHeight = height * 0.2f;
+    minHeight = height * 0.8f;
     stroke(0);
     fill(#6E737E);
     rect(topWall.x, topWall.y, width, height * 0.2f);
@@ -127,8 +134,14 @@ void mainGame()
     }
   }
 
+  //stage 3 (boss)
   if(time < 22.0f)
   {
+    stage2 = false;
+    //set max & min heights for stage 3
+    maxHeight = height * 0.1f;
+    minHeight = height * 0.9f;
+    
     noStroke();
     fill(#A1A6AF);
     rect(midWall.x + width, height * 0.1f, width, height * 0.8f);
@@ -178,7 +191,8 @@ void mainGame()
     Star star = new Star();
     gameObjects.add(star);
   }
-    
+  
+  //spawn stage 1 enemies
   if(frameCount % ((int)time) == 0 && time > 120)
   { 
     int num = (int)random(0, 4);
@@ -233,14 +247,14 @@ void mainGame()
       }
     }
   }
-  
-  if(frameCount % 600 == 0)
+  //spawn powerups
+  if(frameCount % 1200 == 0)
   {
     HealthPowerup health = new HealthPowerup();
     gameObjects.add(health);
   }
   
-  if(frameCount % 240 == 0)
+  if(frameCount % 360 == 0)
   {
     AmmoPowerup ammo = new AmmoPowerup();
     gameObjects.add(ammo);

@@ -10,7 +10,7 @@ class Boss extends GameObject implements Enemy
     pos.x = width + w;
     pos.y = height * 0.5f;
     health = 20;
-    bossHealthBar = new HealthBar(20, height * 0.85f, width * 0.8f, height * 0.1f, health);
+    bossHealthBar = new HealthBar(20, height * 0.9f, width * 0.8f, height * 0.08f, health);
     gameObjects.add(bossHealthBar);
     alive = true;
   }

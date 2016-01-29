@@ -11,8 +11,6 @@ class Player extends GameObject
   int ammo;
   int counter = 0;
   HealthBar playerHealthBar;
-  float maxHeight = 0;
-  float minHeight = height;
   
   //constructors
   Player()
@@ -222,11 +220,5 @@ class Player extends GameObject
     }
     //display players health bar
     playerHealthBar.health = health;
-    
-    if(stage2 == true)
-    {
-      maxHeight = height * 0.2f;
-      minHeight = height * 0.8f;
-    }
   }
 }

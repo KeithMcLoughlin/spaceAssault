@@ -5,7 +5,7 @@ class AmmoPowerup extends GameObject implements Powerup
     w = 30;
     h = 30;
     pos.x = width + w;
-    pos.y = random(h, height - h);
+    pos.y = random(maxHeight + h, minHeight - h);
     speed = 2.0f;
     initial = new PVector(0, 0);
   }
