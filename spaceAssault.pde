@@ -24,7 +24,7 @@ ArrayList<GameObject> gameObjects = new ArrayList<GameObject>();
 boolean[] keys = new boolean[512];
 int state = 0;
 boolean flashing = true;
-float time = 120.0f;  //original 240.0f
+float time = 40.0f;  //original 240.0f
 PVector topWall;
 PVector bottomWall;
 PVector midWall;
@@ -32,6 +32,7 @@ boolean stage2 = false;
 float stage2speed = 2.0f;
 boolean displayControls = false;
 boolean bossSpawned = false;
+boolean bossDefeated = false;
 boolean disableControls = false;
 float maxHeight;
 float minHeight;

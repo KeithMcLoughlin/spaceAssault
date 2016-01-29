@@ -10,19 +10,37 @@ class Boss extends GameObject implements Enemy
     pos.x = width + w;
     pos.y = height * 0.5f;
     health = 20;
-    bossHealthBar = new HealthBar(20, height * 0.9f, width * 0.8f, height * 0.08f, health);
+    bossHealthBar = new HealthBar(20, height * 0.91f, width * 0.8f, height * 0.09f, health);
     gameObjects.add(bossHealthBar);
     alive = true;
   }
   
   void render()
   {
-    stroke(0);
-    fill(255, 0, 0);
-    ellipse(pos.x - (w * 0.25f), pos.y, w * 0.5f, h);
-    
-    fill(127);
-    rect(pos.x - (w * 0.25f), pos.y - (h * 0.5f), w * 0.75f, h);
+    if(alive)
+    {
+      stroke(0);
+      fill(255, 0, 0);
+      ellipse(pos.x - (w * 0.25f), pos.y, w * 0.5f, h);
+      
+      fill(127);
+      rect(pos.x - (w * 0.25f), pos.y - (h * 0.5f), w * 0.75f, h);
+    }
+    else
+    {
+      bossDefeated = true;
+      strokeWeight(5);
+      noFill();
+      stroke(#FFCD15);
+      explosionRadius += 2.0f;
+      ellipse(pos.x, pos.y, explosionRadius, explosionRadius);
+      strokeWeight(1);
+      if(explosionRadius > (w * 2.0f))
+      {
+        gameObjects.remove(bossHealthBar);
+        gameObjects.remove(this);
+      }
+    }
   }
   
   void update()

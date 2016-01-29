@@ -17,17 +17,33 @@ class BossGun extends GameObject implements Enemy
   
   void render()
   {
-    stroke(0);
-    fill(127);
-    rect(pos.x - (w * 0.25f), pos.y - (h * 0.5f), w * 0.75f, h);
-    beginShape();
-    vertex(pos.x - (w * 0.25f), pos.y - (h * 0.5f));
-    vertex(pos.x - (w * 0.5f), pos.y - (h * 0.25f));
-    vertex(pos.x - (w * 0.5f), pos.y + (h * 0.25f));
-    vertex(pos.x - (w * 0.25f), pos.y + (h * 0.5f));
-    endShape(CLOSE);
-    gunPos.x = pos.x - (w * 0.5f);
-    gunPos.y = pos.y;
+    if(bossDefeated == false)
+    {
+      stroke(0);
+      fill(127);
+      rect(pos.x - (w * 0.25f), pos.y - (h * 0.5f), w * 0.75f, h);
+      beginShape();
+      vertex(pos.x - (w * 0.25f), pos.y - (h * 0.5f));
+      vertex(pos.x - (w * 0.5f), pos.y - (h * 0.25f));
+      vertex(pos.x - (w * 0.5f), pos.y + (h * 0.25f));
+      vertex(pos.x - (w * 0.25f), pos.y + (h * 0.5f));
+      endShape(CLOSE);
+      gunPos.x = pos.x - (w * 0.5f);
+      gunPos.y = pos.y;
+    }
+    else
+    {
+      strokeWeight(5);
+      noFill();
+      stroke(#FFCD15);
+      explosionRadius += 2.0f;
+      ellipse(pos.x, pos.y, explosionRadius, explosionRadius);
+      strokeWeight(1);
+      if(explosionRadius > (w * 2.0f))
+      {
+        gameObjects.remove(this);
+      }
+    }
   }
   
   void update()
