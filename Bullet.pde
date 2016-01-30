@@ -4,6 +4,7 @@ class Bullet extends GameObject
   float x, y;
   boolean turret = false;
   boolean turretTop = true;
+  AudioPlayer laserSound;
   
   Bullet(float angle, float speed, boolean f)
   {
@@ -12,6 +13,15 @@ class Bullet extends GameObject
     h = 3;
     w = 20;
     friendly = f;
+    /*if(friendly == true)
+    {
+      laserSound = minim.loadFile("playerLaser.mp3");
+    }
+    else
+    {
+      laserSound = minim.loadFile("enemyLaser.wav");
+    }
+    laserSound.play();*/
   }
   
   void render()

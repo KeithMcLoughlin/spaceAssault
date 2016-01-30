@@ -1,5 +1,13 @@
+//all sounds are free and were downloaded at www.freesound.org
+import ddf.minim.*;
+Minim minim;
+AudioPlayer menuMusic;
+AudioPlayer gameMusic;
+AudioPlayer gameoverSound;
+
 void setup()
 {
+  minim = new Minim(this);
   size(1000, 600);
   background(0);
   
@@ -9,6 +17,10 @@ void setup()
   topWall = new PVector(width, 0);
   bottomWall = new PVector(width, height * 0.8f);
   midWall = new PVector(width, height * 0.2f);
+  
+  menuMusic = minim.loadFile("menuMusic.mp3");
+  gameMusic = minim.loadFile("gameMusic.mp3");
+  gameoverSound = minim.loadFile("gameoverSound.mp3");
 }
 
 ArrayList<GameObject> gameObjects = new ArrayList<GameObject>();
@@ -30,7 +42,7 @@ float minHeight;
 
 void draw()
 {
-  background(0);
+  background(0); 
   switch(state)
   {
     case 0: {mainMenu(); break;}
@@ -40,7 +52,12 @@ void draw()
 }
 
 void mainMenu()
-{
+{ 
+  if(!menuMusic.isPlaying())
+  {
+    menuMusic.rewind();
+    menuMusic.play();
+  }
   if(displayControls == false)
   {
     fill(255);
@@ -106,6 +123,16 @@ void mainMenu()
 
 void mainGame()
 {
+  if(!gameMusic.isPlaying())
+  {
+    menuMusic.close();
+    gameoverSound.close();
+    menuMusic = minim.loadFile("menuMusic.mp3");
+    gameoverSound = minim.loadFile("gameoverSound.mp3");
+    gameMusic.rewind();
+    gameMusic.play();
+  }
+  
   //stage 2
   if(time < 111.0f && time > 22.0f)
   {
@@ -296,6 +323,13 @@ void mainGame()
 
 void gameOver()
 {
+  if(!gameoverSound.isPlaying())
+  {
+    gameMusic.close();
+    gameMusic = minim.loadFile("gameMusic.mp3");
+    gameoverSound.rewind();
+    gameoverSound.play();
+  }
   fill(255, 0, 0);
   textSize(100);
   text("Game Over", width * 0.2, height * 0.4);
@@ -372,7 +406,7 @@ void checkCollisions()
             }
             else
             {
-              gameObjects.remove(object);
+              object.alive = false;
               ((Player)go).health--;
             }
           }
