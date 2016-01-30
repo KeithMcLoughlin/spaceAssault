@@ -44,7 +44,7 @@ class Asteroid extends GameObject implements  Enemy
       strokeWeight(5);
       noFill();
       stroke(#FFCD15);
-      explosionRadius += 2.0f;
+      explosionRadius += 8.0f;
       ellipse(pos.x, pos.y, explosionRadius, explosionRadius);
       strokeWeight(1);
       if(explosionRadius > (w * 2.0f))

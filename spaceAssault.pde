@@ -9,22 +9,13 @@ void setup()
   topWall = new PVector(width, 0);
   bottomWall = new PVector(width, height * 0.8f);
   midWall = new PVector(width, height * 0.2f);
-  
-  Player player = new Player();
-  gameObjects.add(player);
-  
-  for(int i = 0; i < 15; i++)
-  {
-    Star star = new Star(random(0, width), random(0, height));
-    gameObjects.add(star);
-  }
 }
 
 ArrayList<GameObject> gameObjects = new ArrayList<GameObject>();
 boolean[] keys = new boolean[512];
 int state = 0;
 boolean flashing = true;
-float time = 40.0f;  //original 240.0f
+float time = 240.0f;  //original 240.0f
 PVector topWall;
 PVector bottomWall;
 PVector midWall;
@@ -72,6 +63,25 @@ void mainMenu()
     }
     if(keys[' '])
     {
+      for(int i = gameObjects.size() - 1; i >= 0; i--)
+      {
+        gameObjects.remove(gameObjects.get(i));
+      }
+      for(int i = 0; i < 15; i++)
+      {
+        Star star = new Star(random(0, width), random(0, height));
+        gameObjects.add(star);
+      }
+      Player player = new Player();
+      gameObjects.add(player);
+      
+      time = 240.0f;
+      topWall.x = width;
+      bottomWall.x = width;
+      midWall.x = width;
+      maxHeight = 0;
+      minHeight = height;
+
       state = 1;
     }
   }
@@ -139,10 +149,12 @@ void mainGame()
   if(time < 22.0f)
   {
     stage2 = false;
-    //set max & min heights for stage 3
-    maxHeight = height * 0.1f;
-    minHeight = height * 0.9f;
-    
+    if(topWall.x + width <= 0.0f)
+    {
+      //set max & min heights for stage 3
+      maxHeight = height * 0.1f;
+      minHeight = height * 0.9f;
+    }
     noStroke();
     fill(#A1A6AF);
     rect(midWall.x + width, height * 0.1f, width, height * 0.8f);
@@ -161,7 +173,7 @@ void mainGame()
     fill(#6E737E);
     rect(bottomWall.x, bottomWall.y, width, height * 0.2f);
     
-    if(topWall.x + width >= 0.0f)
+    if(topWall.x + width >= 0.0f || bossDefeated == true)
     {
       topWall.x -= stage2speed;
       bottomWall.x -= stage2speed;
@@ -177,6 +189,20 @@ void mainGame()
       Boss boss = new Boss();
       gameObjects.add(boss);
       bossSpawned = true;
+    }
+    
+    //end screen
+    if(topWall.x + (width * 2.0f) <= 0.0f)
+    {
+      textSize(180);
+      fill(255);
+      text("VICTORY", width * 0.1f, height * 0.4f);
+      textSize(50);
+      text("You have saved all of Mankind", width * 0.125f, height * 0.7f);
+      if(topWall.x + (width * 3.5f) <= 0.0f)
+      {
+        state = 0;
+      }
     }
   }
   
@@ -249,13 +275,13 @@ void mainGame()
     }
   }
   //spawn powerups
-  if(frameCount % 1200 == 0)
+  if(frameCount % 1200 == 0 && bossDefeated == false)
   {
     HealthPowerup health = new HealthPowerup();
     gameObjects.add(health);
   }
   
-  if(frameCount % 360 == 0)
+  if(frameCount % 360 == 0 && bossDefeated == false)
   {
     AmmoPowerup ammo = new AmmoPowerup();
     gameObjects.add(ammo);
@@ -277,10 +303,15 @@ void gameOver()
   text("Press Space to Restart", width * 0.35, height * 0.5);
   for(int i = gameObjects.size() - 1; i >= 0; i--)
   {
-    gameObjects.remove(gameObjects.get(i));      //gameObjects.clear
+    gameObjects.remove(gameObjects.get(i));
   }
   if(keys[' '])
   {
+    for(int i = 0; i < 15; i++)
+    {
+      Star star = new Star(random(0, width), random(0, height));
+      gameObjects.add(star);
+    }
     Player player = new Player();
     gameObjects.add(player);
     
@@ -288,12 +319,9 @@ void gameOver()
     topWall.x = width;
     bottomWall.x = width;
     midWall.x = width;
-    
-    for(int i = 0; i < 15; i++)
-    {
-      Star star = new Star(random(0, width), random(0, height));
-      gameObjects.add(star);
-    }
+    maxHeight = 0;
+    minHeight = height;
+
     state = 1;
   }
 }
@@ -338,8 +366,15 @@ void checkCollisions()
         {
           if(go.pos.dist(object.pos) < (go.w * 0.5f) + (object.w * 0.5f) && object.alive == true)
           {
-            gameObjects.remove(object);
-            ((Player)go).health--;
+            if(object instanceof Boss)
+            {
+              ((Player)go).health -= 3;
+            }
+            else
+            {
+              gameObjects.remove(object);
+              ((Player)go).health--;
+            }
           }
         }
       }
