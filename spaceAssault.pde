@@ -1,10 +1,13 @@
-//all sounds are free and were downloaded at www.freesound.org
+//all sounds are free and were downloaded at www.freesound.org (except for stage 1 & 2 songs were created by a family member)
 import ddf.minim.*;
 Minim minim;
 AudioPlayer menuMusic;
-AudioPlayer gameMusic;
+AudioPlayer stage1Music;
 AudioPlayer gameoverSound;
 AudioPlayer deathSound;
+AudioPlayer stage2Music;
+AudioPlayer bossMusic;
+AudioPlayer victoryMusic;
 
 void setup()
 {
@@ -20,7 +23,10 @@ void setup()
   midWall = new PVector(width, height * 0.2f);
   
   menuMusic = minim.loadFile("menuMusic.mp3");
-  gameMusic = minim.loadFile("gameMusic.mp3");
+  stage1Music = minim.loadFile("stage1Music.mp3");
+  stage2Music = minim.loadFile("stage2Music.mp3");
+  bossMusic = minim.loadFile("bossMusic.mp3");
+  victoryMusic = minim.loadFile("victoryMusic.mp3");
   gameoverSound = minim.loadFile("gameoverSound.mp3");
   deathSound = minim.loadFile("enemyBoom.wav");
 }
@@ -57,8 +63,8 @@ void mainMenu()
 { 
   if(!menuMusic.isPlaying())
   {
-    gameMusic.close();
-    gameMusic = minim.loadFile("gameMusic.mp3");
+    victoryMusic.close();
+    victoryMusic = minim.loadFile("victoryMusic.mp3");
     menuMusic.rewind();
     menuMusic.play();
   }
@@ -96,7 +102,7 @@ void mainMenu()
       Player player = new Player();
       gameObjects.add(player);
       
-      time = 40.0f;
+      time = 120.0f;
       topWall.x = width;
       bottomWall.x = width;
       midWall.x = width;
@@ -127,19 +133,30 @@ void mainMenu()
 
 void mainGame()
 {
-  if(!gameMusic.isPlaying())
+  //stage1
+  if(time < 240.0f && time > 111.0f)
   {
-    menuMusic.close();
-    gameoverSound.close();
-    menuMusic = minim.loadFile("menuMusic.mp3");
-    gameoverSound = minim.loadFile("gameoverSound.mp3");
-    gameMusic.rewind();
-    gameMusic.play();
+    if(!stage1Music.isPlaying())
+    {
+      menuMusic.close();
+      gameoverSound.close();
+      menuMusic = minim.loadFile("menuMusic.mp3");
+      gameoverSound = minim.loadFile("gameoverSound.mp3");
+      stage1Music.rewind();
+      stage1Music.play();
+    }
   }
   
   //stage 2
   if(time < 111.0f && time > 22.0f)
   {
+    if(!stage2Music.isPlaying())
+    {
+      stage1Music.close();
+      stage1Music = minim.loadFile("stage1Music.mp3");
+      stage2Music.rewind();
+      stage2Music.play();
+    }
     if(stage2 == false)
     {
       disableControls = true;
@@ -179,6 +196,13 @@ void mainGame()
   //stage 3 (boss)
   if(time < 22.0f)
   {
+    if(!bossMusic.isPlaying() && bossDefeated == false)
+    {
+      stage2Music.close();
+      stage2Music = minim.loadFile("stage2Music.mp3");
+      bossMusic.rewind();
+      bossMusic.play();
+    }
     stage2 = false;
     if(topWall.x + width <= 0.0f)
     {
@@ -221,7 +245,16 @@ void mainGame()
       gameObjects.add(boss);
       bossSpawned = true;
     }
-    
+    if(bossDefeated == true)
+    {
+      if(!victoryMusic.isPlaying())
+      {
+        bossMusic.close();
+        bossMusic = minim.loadFile("bossMusic.mp3");
+        victoryMusic.rewind();
+        victoryMusic.play();
+      }
+    }
     //end screen
     if(topWall.x + (width * 2.0f) <= 0.0f)
     {
@@ -329,8 +362,12 @@ void gameOver()
 {
   if(!gameoverSound.isPlaying())
   {
-    gameMusic.close();
-    gameMusic = minim.loadFile("gameMusic.mp3");
+    stage1Music.close();
+    stage2Music.close();
+    bossMusic.close();
+    stage1Music = minim.loadFile("stage1Music.mp3");
+    stage2Music = minim.loadFile("stage2Music.mp3");
+    bossMusic = minim.loadFile("bossMusic.mp3");
     gameoverSound.rewind();
     gameoverSound.play();
   }
