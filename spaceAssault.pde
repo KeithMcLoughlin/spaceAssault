@@ -4,6 +4,7 @@ Minim minim;
 AudioPlayer menuMusic;
 AudioPlayer gameMusic;
 AudioPlayer gameoverSound;
+AudioPlayer deathSound;
 
 void setup()
 {
@@ -21,6 +22,7 @@ void setup()
   menuMusic = minim.loadFile("menuMusic.mp3");
   gameMusic = minim.loadFile("gameMusic.mp3");
   gameoverSound = minim.loadFile("gameoverSound.mp3");
+  deathSound = minim.loadFile("enemyBoom.wav");
 }
 
 ArrayList<GameObject> gameObjects = new ArrayList<GameObject>();
@@ -55,6 +57,8 @@ void mainMenu()
 { 
   if(!menuMusic.isPlaying())
   {
+    gameMusic.close();
+    gameMusic = minim.loadFile("gameMusic.mp3");
     menuMusic.rewind();
     menuMusic.play();
   }
@@ -92,7 +96,7 @@ void mainMenu()
       Player player = new Player();
       gameObjects.add(player);
       
-      time = 240.0f;
+      time = 40.0f;
       topWall.x = width;
       bottomWall.x = width;
       midWall.x = width;
@@ -406,15 +410,19 @@ void checkCollisions()
             }
             else
             {
+              deathSound.rewind();
+              deathSound.play();
               object.alive = false;
               ((Player)go).health--;
             }
           }
         }
       }
-      if(((Player)go).health <= 0)
+      if(go.health <= 0 && go.alive)
       {
-        state = 2;
+        deathSound.rewind();
+        deathSound.play();  
+        go.alive = false;
       }
     }
     if(go instanceof Enemy)
@@ -430,6 +438,8 @@ void checkCollisions()
             go.health--;
             if(go.health <= 0)
             {
+              deathSound.rewind();
+              deathSound.play();
               go.alive = false;
             }
           }
