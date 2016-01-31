@@ -10,7 +10,7 @@ class Asteroid extends GameObject implements  Enemy
     pos.x = width + w;
     pos.y = random(h, height - h);
     initial = new PVector(0, 0);
-    speed = 2.0f;
+    speed = 5.0f;
     theta = 0.0f;
     health = 2;
     alive = true;

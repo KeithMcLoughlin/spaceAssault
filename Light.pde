@@ -8,7 +8,7 @@ class Light extends GameObject
     w = 20;
     h = 20;
     pos.x = width + w;
-    pos.y = random((height * 0.2f) + h, (height * 0.8f) - h);
+    pos.y = height * 0.4f;
     speed = 2.0f;
     c = color(255, 0, 0);
     theta = 0.0f;

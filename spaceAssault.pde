@@ -83,7 +83,7 @@ void mainMenu()
       text("Press Space to Start", width * 0.35, height * 0.5);
     }
     textSize(30);
-    text("Controls - Press C", width * 0.35, height * 0.8);
+    text("Controls - Press C", width * 0.36, height * 0.8);
     if(keys['C'])
     {
       displayControls = true;
@@ -102,7 +102,7 @@ void mainMenu()
       Player player = new Player();
       gameObjects.add(player);
       
-      time = 120.0f;
+      time = 240.0f;  //start point is 240.0f
       topWall.x = width;
       bottomWall.x = width;
       midWall.x = width;
@@ -196,7 +196,7 @@ void mainGame()
   //stage 3 (boss)
   if(time < 22.0f)
   {
-    if(!bossMusic.isPlaying() && bossDefeated == false)
+    if(!bossMusic.isPlaying() && bossDefeated == false && bossSpawned == true)
     {
       stage2Music.close();
       stage2Music = minim.loadFile("stage2Music.mp3");
@@ -372,10 +372,12 @@ void gameOver()
     gameoverSound.play();
   }
   fill(255, 0, 0);
-  textSize(100);
-  text("Game Over", width * 0.2, height * 0.4);
   textSize(30);
-  text("Press Space to Restart", width * 0.35, height * 0.5);
+  text("You were defeated and now mankinds destruction is inevitable", width * 0.05f, height * 0.2f);
+  textSize(100);
+  text("GAME OVER", width * 0.2, height * 0.4);
+  textSize(30);
+  text("Press Space to Restart", width * 0.325, height * 0.75);
   for(int i = gameObjects.size() - 1; i >= 0; i--)
   {
     gameObjects.remove(gameObjects.get(i));

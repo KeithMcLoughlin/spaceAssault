@@ -10,7 +10,7 @@ class Bomb extends GameObject implements  Enemy
     h = 30;
     pos.x = width + w;
     pos.y = random(h, height - h);
-    speed = 2.0f;
+    speed = 5.0f;
     chaseSpeed = 1.5f;
     lightRadius = 0.0f;
     explosionRadius = 0.0f;
