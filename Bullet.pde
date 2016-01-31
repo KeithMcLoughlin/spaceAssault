@@ -13,7 +13,7 @@ class Bullet extends GameObject
     h = 3;
     w = 20;
     friendly = f;
-    /*if(friendly == true)
+    if(friendly == true)
     {
       laserSound = minim.loadFile("playerLaser.mp3");
     }
@@ -21,7 +21,7 @@ class Bullet extends GameObject
     {
       laserSound = minim.loadFile("enemyLaser.wav");
     }
-    laserSound.play();*/
+    laserSound.play();
   }
   
   void render()
@@ -73,6 +73,11 @@ class Bullet extends GameObject
     {
       //remove bullet
       gameObjects.remove(this);
+    }
+    
+    if(!laserSound.isPlaying())
+    {
+      laserSound.close();
     }
   }
 }
