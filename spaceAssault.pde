@@ -9,6 +9,8 @@ AudioPlayer deathSound;
 AudioPlayer stage2Music;
 AudioPlayer bossMusic;
 AudioPlayer victoryMusic;
+AudioPlayer hitSound;
+AudioPlayer powerupSound;
 
 void setup()
 {
@@ -32,6 +34,8 @@ void setup()
   victoryMusic = minim.loadFile("victoryMusic.mp3");
   gameoverSound = minim.loadFile("gameoverSound.mp3");
   deathSound = minim.loadFile("enemyBoom.wav");
+  hitSound = minim.loadFile("hitSound.mp3");
+  powerupSound = minim.loadFile("powerup.mp3");
 }
 
 ArrayList<GameObject> gameObjects = new ArrayList<GameObject>();
@@ -118,7 +122,7 @@ void mainMenu()
       gameObjects.add(player);
       
       //intialise key variables
-      time = 120.0f;  //start point is 240.0f
+      time = 240.0f;  //start point is 240.0f
       topWall.x = width;
       bottomWall.x = width;
       midWall.x = width;
@@ -378,7 +382,7 @@ void mainGame()
     gameObjects.add(health);
   }
   
-  if(frameCount % 360 == 0 && bossDefeated == false)
+  if(frameCount % 540 == 0 && bossDefeated == false)
   {
     AmmoPowerup ammo = new AmmoPowerup();
     gameObjects.add(ammo);
@@ -465,6 +469,8 @@ void checkCollisions()
         {
           if(go.pos.dist(object.pos) < (go.w * 0.5f) + (object.w * 0.5f))
           {
+            powerupSound.rewind();
+            powerupSound.play();
             ((Powerup)object).applyTo((Player)go);
             gameObjects.remove(object);
           }
@@ -476,6 +482,10 @@ void checkCollisions()
           {
             //remove bullet
             gameObjects.remove(object);
+            
+            hitSound.rewind();
+            hitSound.play();
+            
             //damage player
             ((Player)go).health--;
           }
@@ -523,6 +533,8 @@ void checkCollisions()
           if(object.friendly == true && go.pos.dist(object.pos) < (go.w * 0.5f) + (object.w * 0.5f) && go.alive)
           {
             gameObjects.remove(object);
+            hitSound.rewind();
+            hitSound.play();
             go.health--;
             //if dead
             if(go.health <= 0)
