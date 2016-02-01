@@ -12,10 +12,12 @@ class Turret extends GameObject implements Enemy
     pos.x = width + w;
     if(num > 0.5f)
     {
+      //bottom turret
       pos.y = (height * 0.8f) - (h * 0.5f);
     }
     else
     {
+      //top turret
       pos.y = (height * 0.2f) + (h * 0.5f);
     }
     speed = 2.0f;
@@ -29,6 +31,7 @@ class Turret extends GameObject implements Enemy
   {
     if(alive)
     {
+      //find angle between turret and player
       gunAngle = atan2(pos.y - playerY, pos.x - playerX);
       if(num > 0.5f)
       {
@@ -52,6 +55,7 @@ class Turret extends GameObject implements Enemy
         rect(-(w *0.625f), h * 0.2f, w, -(h * 0.4f));
         popMatrix();
       }
+      //position where bullet will spawn
       gunPos.x = pos.x;
       gunPos.y = pos.y;
     }

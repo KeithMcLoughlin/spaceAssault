@@ -48,6 +48,7 @@ class HealthPowerup extends GameObject implements Powerup
   
   void applyTo(Player player)
   {
+    //dont increase players health over 3
     if(player.health != 3)
     {
       player.health++;

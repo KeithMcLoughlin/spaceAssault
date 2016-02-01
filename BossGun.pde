@@ -64,6 +64,7 @@ class BossGun extends GameObject implements Enemy
         pos.y += speed;
       }
       
+      //shoot multiple bullets for an amount of time
       if(timeElapsed > 180 && timeElapsed < 200)
       {
         Bullet bullet = new Bullet(0.0f, -8.0f, false);
@@ -73,6 +74,7 @@ class BossGun extends GameObject implements Enemy
         gameObjects.add(bullet);
       }
       timeElapsed++;
+      //reset timer
       if(timeElapsed > 200)
       {
         timeElapsed = 0;
@@ -80,6 +82,7 @@ class BossGun extends GameObject implements Enemy
     }
     else
     {
+      //move out when spawned
       pos.x -= speed;
     }
   }

@@ -1,4 +1,5 @@
 //all sounds are free and were downloaded at www.freesound.org (except for stage 1 & 2 songs were created by a family member)
+//sound files
 import ddf.minim.*;
 Minim minim;
 AudioPlayer menuMusic;
@@ -15,6 +16,7 @@ void setup()
   size(1000, 600);
   background(0);
   
+  //setting min and max height the player can move in the stage
   maxHeight = 0;
   minHeight = height;
   
@@ -22,6 +24,7 @@ void setup()
   bottomWall = new PVector(width, height * 0.8f);
   midWall = new PVector(width, height * 0.2f);
   
+  //loading in the sound files
   menuMusic = minim.loadFile("menuMusic.mp3");
   stage1Music = minim.loadFile("stage1Music.mp3");
   stage2Music = minim.loadFile("stage2Music.mp3");
@@ -41,10 +44,14 @@ PVector bottomWall;
 PVector midWall;
 boolean stage2 = false;
 float stage2speed = 2.0f;
+//trigger for displaying the controls on screen in main menu
 boolean displayControls = false;
+//flags for boss
 boolean bossSpawned = false;
 boolean bossDefeated = false;
+//used to disable controls if player needs to be centered
 boolean disableControls = false;
+//variables for setting the heights the player can move in the stage
 float maxHeight;
 float minHeight;
 
@@ -61,8 +68,10 @@ void draw()
 
 void mainMenu()
 { 
+  //play music
   if(!menuMusic.isPlaying())
   {
+    //close the victory music if you enter this state from the victory screen
     victoryMusic.close();
     victoryMusic = minim.loadFile("victoryMusic.mp3");
     menuMusic.rewind();
@@ -72,7 +81,9 @@ void mainMenu()
   {
     fill(255);
     textSize(100);
+    //title
     text("Space Assault", width * 0.15, height * 0.2);
+    //make text flash
     if(frameCount % 40 == 0)
     {
       flashing = !flashing;
@@ -88,32 +99,39 @@ void mainMenu()
     {
       displayControls = true;
     }
+    //start game
     if(keys[' '])
     {
+      //remove all game objects
       for(int i = gameObjects.size() - 1; i >= 0; i--)
       {
         gameObjects.remove(gameObjects.get(i));
       }
+      //add starting stars
       for(int i = 0; i < 15; i++)
       {
         Star star = new Star(random(0, width), random(0, height));
         gameObjects.add(star);
       }
+      //add player
       Player player = new Player();
       gameObjects.add(player);
       
-      time = 240.0f;  //start point is 240.0f
+      //intialise key variables
+      time = 120.0f;  //start point is 240.0f
       topWall.x = width;
       bottomWall.x = width;
       midWall.x = width;
       maxHeight = 0;
       minHeight = height;
-
+      
+      //change the game state
       state = 1;
     }
   }
   else
   {
+    //display controls
     fill(255);
     textSize(30);
     text("W - Move Up", width * 0.15, height * 0.1);
@@ -136,12 +154,17 @@ void mainGame()
   //stage1
   if(time < 240.0f && time > 111.0f)
   {
+    //loop the stage music
     if(!stage1Music.isPlaying())
     {
+      //close menu music if coming from the menu
       menuMusic.close();
+      //close gameover music if restarting from gameover screen
       gameoverSound.close();
+      //load in the sound files again
       menuMusic = minim.loadFile("menuMusic.mp3");
       gameoverSound = minim.loadFile("gameoverSound.mp3");
+      //play the music
       stage1Music.rewind();
       stage1Music.play();
     }
@@ -157,14 +180,18 @@ void mainGame()
       stage2Music.rewind();
       stage2Music.play();
     }
+    //disable controls once to center player
     if(stage2 == false)
     {
       disableControls = true;
     }
+    
     stage2 = true;
     //set max & min heights for stage 2
     maxHeight = height * 0.2f;
     minHeight = height * 0.8f;
+    
+    //render background for stage
     stroke(0);
     fill(#6E737E);
     rect(topWall.x, topWall.y, width, height * 0.2f);
@@ -196,6 +223,7 @@ void mainGame()
   //stage 3 (boss)
   if(time < 22.0f)
   {
+    //play boss music only when boss is on screen
     if(!bossMusic.isPlaying() && bossDefeated == false && bossSpawned == true)
     {
       stage2Music.close();
@@ -210,6 +238,8 @@ void mainGame()
       maxHeight = height * 0.1f;
       minHeight = height * 0.9f;
     }
+    
+    //render stage 3 walls
     noStroke();
     fill(#A1A6AF);
     rect(midWall.x + width, height * 0.1f, width, height * 0.8f);
@@ -219,6 +249,7 @@ void mainGame()
     fill(#6E737E);
     rect(bottomWall.x + width, height * 0.9f, width, height * 0.1f);
     
+    //render stage 2 walls while entering stage 3
     noStroke();
     fill(#A1A6AF);
     rect(midWall.x, midWall.y, width, height * 0.6f);
@@ -228,6 +259,7 @@ void mainGame()
     fill(#6E737E);
     rect(bottomWall.x, bottomWall.y, width, height * 0.2f);
     
+    //move background again to advance to victory screen
     if(topWall.x + width >= 0.0f || bossDefeated == true)
     {
       topWall.x -= stage2speed;
@@ -235,6 +267,7 @@ void mainGame()
       midWall.x -= stage2speed;
     }
     
+    //spawn boss
     if(topWall.x + width < 0.0f && bossSpawned == false)
     {
       BossGun bGun1 = new BossGun(height * 0.3f, true);
@@ -247,6 +280,7 @@ void mainGame()
     }
     if(bossDefeated == true)
     {
+      //play victory music
       if(!victoryMusic.isPlaying())
       {
         bossMusic.close();
@@ -277,6 +311,7 @@ void mainGame()
     go.render();
   }
   
+  //spawn background stars
   if(frameCount % 10 == 0 && time > 111.0f)
   {
     Star star = new Star();
@@ -315,6 +350,7 @@ void mainGame()
     }
   }
   
+  //pass player position to enemies that require it
   for(int i = gameObjects.size() - 1; i >= 0; i--)
   {
     GameObject go = gameObjects.get(i);
@@ -371,6 +407,7 @@ void gameOver()
     gameoverSound.rewind();
     gameoverSound.play();
   }
+  //display gameover text
   fill(255, 0, 0);
   textSize(30);
   text("You were defeated and now mankinds destruction is inevitable", width * 0.05f, height * 0.2f);
@@ -378,10 +415,13 @@ void gameOver()
   text("GAME OVER", width * 0.2, height * 0.4);
   textSize(30);
   text("Press Space to Restart", width * 0.325, height * 0.75);
+  
+  //remove all objects
   for(int i = gameObjects.size() - 1; i >= 0; i--)
   {
     gameObjects.remove(gameObjects.get(i));
   }
+  //restart game
   if(keys[' '])
   {
     for(int i = 0; i < 15; i++)
@@ -423,6 +463,7 @@ void checkCollisions()
       for(int j = gameObjects.size() - 1; j >= 0; j--)
       {
         GameObject object = gameObjects.get(j);
+        //apply powerups to player when they contact
         if(object instanceof Powerup)
         {
           if(go.pos.dist(object.pos) < (go.w * 0.5f) + (object.w * 0.5f))
@@ -433,30 +474,39 @@ void checkCollisions()
         }
         if(object instanceof Bullet)
         {
+          //if its an enemy bullet
           if(object.friendly == false && go.pos.dist(object.pos) < (go.w * 0.5f) + (object.w * 0.5f))
           {
+            //remove bullet
             gameObjects.remove(object);
+            //damage player
             ((Player)go).health--;
           }
         }
         if(object instanceof Enemy)
         {
+          //if player contacts an alive enemy
           if(go.pos.dist(object.pos) < (go.w * 0.5f) + (object.w * 0.5f) && object.alive == true)
           {
+            //if its the boss
             if(object instanceof Boss)
             {
+              //kill player
               ((Player)go).health -= 3;
             }
             else
             {
               deathSound.rewind();
               deathSound.play();
+              //kill enemy
               object.alive = false;
+              //damage player
               ((Player)go).health--;
             }
           }
         }
       }
+      //if player is dead
       if(go.health <= 0 && go.alive)
       {
         deathSound.rewind();
@@ -464,6 +514,7 @@ void checkCollisions()
         go.alive = false;
       }
     }
+    //check enemy collisions
     if(go instanceof Enemy)
     {
       for(int j = 0; j <= gameObjects.size() - 1; j++)
@@ -471,10 +522,12 @@ void checkCollisions()
         GameObject object = gameObjects.get(j);
         if(object instanceof Bullet)
         {
+          //if hit by player bullet
           if(object.friendly == true && go.pos.dist(object.pos) < (go.w * 0.5f) + (object.w * 0.5f) && go.alive)
           {
             gameObjects.remove(object);
             go.health--;
+            //if dead
             if(go.health <= 0)
             {
               deathSound.rewind();
@@ -484,6 +537,7 @@ void checkCollisions()
           }
           if(go instanceof BossGun)
           {
+            //if bullet hits boss gun, remove bullet
             if(object.friendly == true && go.pos.dist(object.pos) < (go.w * 0.5f) + (object.w * 0.5f))
             {
               gameObjects.remove(object);

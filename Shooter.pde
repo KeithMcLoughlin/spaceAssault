@@ -80,6 +80,7 @@ class Shooter extends  GameObject implements Enemy
     }
     if(alive)
     {
+      //fire top gun
       if(frameCount % 50 == 0)
       {
         Bullet bullet = new Bullet(0.0f, -8.0f, false);
@@ -88,7 +89,7 @@ class Shooter extends  GameObject implements Enemy
         bullet.c = color(255, 0, 0);
         gameObjects.add(bullet);
       }
-      
+      //fire bottom gun
       if(frameCount % 70 == 0)
       {
         Bullet bullet = new Bullet(0.0f, -8.0f, false);

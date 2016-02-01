@@ -16,6 +16,7 @@ class Light extends GameObject
   
   void render()
   {
+    //rotating lights
     stroke(c, 126);
     fill(c, 126);
     pushMatrix();
@@ -26,6 +27,7 @@ class Light extends GameObject
     popMatrix();
     stroke(0);
     fill(c);
+    //body
     ellipse(pos.x, pos.y, w, h);
     
     theta += 0.1f;

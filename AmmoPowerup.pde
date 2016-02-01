@@ -19,7 +19,7 @@ class AmmoPowerup extends GameObject implements Powerup
     //outer box
     fill(#F2FF3E);
     rect(initial.x, initial.y, w, h);
-    //red cross
+    //ammo text
     fill(0);
     textSize(8);
     text("AMMO", initial.x + (w * 0.1f), initial.y + (h * 0.4f));

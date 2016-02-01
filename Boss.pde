@@ -19,10 +19,12 @@ class Boss extends GameObject implements Enemy
   {
     if(alive)
     {
+      //render semi-circle front
       stroke(0);
       fill(255, 0, 0);
       ellipse(pos.x - (w * 0.25f), pos.y, w * 0.5f, h);
       
+      //body
       fill(127);
       rect(pos.x - (w * 0.25f), pos.y - (h * 0.5f), w * 0.75f, h);
     }
@@ -47,11 +49,13 @@ class Boss extends GameObject implements Enemy
   {
     if(pos.x + (w * 0.5f) < width)
     {
+      //change direction when boss hits top and bottom of game area
       if(pos.y - (h * 0.5f) < height * 0.1f || pos.y + (h * 0.5f) > height * 0.9f)
       {
         direction = !direction;
       }
       
+      //move in the current drection
       if(direction == true)
       {
         pos.y -= speed;
@@ -65,7 +69,7 @@ class Boss extends GameObject implements Enemy
     {
       pos.x -= speed;
     }
-    
+   
     bossHealthBar.health = health;
   }
 }

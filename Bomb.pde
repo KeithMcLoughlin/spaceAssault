@@ -58,6 +58,7 @@ class Bomb extends GameObject implements  Enemy
     }
     if(alive)
     {
+      //follow the player's y co-ordinate
       if(playerY > pos.y)
       {
         pos.y += chaseSpeed;
@@ -68,6 +69,7 @@ class Bomb extends GameObject implements  Enemy
       }
       
       lightRadius += 2.0f;
+      //reset flashing light
       if(lightRadius > (w * 2.0f))
       {
         lightRadius = 0.0f;

@@ -2,6 +2,7 @@ class Bullet extends GameObject
 {
   color c;
   float x, y;
+  //flags used for turret bullets
   boolean turret = false;
   boolean turretTop = true;
   AudioPlayer laserSound;
@@ -57,6 +58,7 @@ class Bullet extends GameObject
     {
       if(turretTop == true)
       {
+        //find the x within a range
         x = (map(-gunAngle, 0, PI, -speed, speed)) - 2.0f;
         y = sin(-gunAngle) * speed;
       }
@@ -77,6 +79,7 @@ class Bullet extends GameObject
     
     if(!laserSound.isPlaying())
     {
+      //close the sound file when its done playing
       laserSound.close();
     }
   }
