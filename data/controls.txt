@@ -1,0 +1,8 @@
+W - Move Up
+S - Move Down
+A - Move Left
+D - Move Right
+Up Arrow - Fire Top Gun
+Down Arrow - Fire Bottom Gun
+Right Arrow - Fire Middle Gun
+Press B to Return to Menu

@@ -134,14 +134,11 @@ void mainMenu()
     //display controls
     fill(255);
     textSize(30);
-    text("W - Move Up", width * 0.15, height * 0.1);
-    text("S - Move Down", width * 0.15, height * 0.2);
-    text("A - Move Left", width * 0.15, height * 0.3);
-    text("D - Move Right", width * 0.15, height * 0.4);
-    text("Up Arrow - Fire Top Gun", width * 0.15, height * 0.5);
-    text("Down Arrow - Fire Bottom Gun", width * 0.15, height * 0.6);
-    text("Right Arrow - Fire Middle Gun", width * 0.15, height * 0.7);
-    text("Press B to Return to Menu", width * 0.15, height * 0.9);
+    String[] lines = loadStrings("controls.txt");
+    for (int i = 0; i < lines.length; i++) 
+    {
+       text(lines[i], width * 0.15f, height * ((i+1) * 0.1));
+    }
     if(keys['B'])
     {
       displayControls = false;
